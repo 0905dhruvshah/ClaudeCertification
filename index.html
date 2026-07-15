@@ -17,7 +17,7 @@
       <section id="welcome" class="welcome">
         <nav class="landing-nav" aria-label="Main navigation"><a class="brand" href="#welcome"><span>CCA</span> / F</a><span class="nav-label">Personal practice environment</span><button class="nav-link" data-portal="practice">Practice</button><button class="nav-link" data-portal="dashboard">Dashboard</button></nav>
         <div class="hero-grid">
-          <div class="hero-copy"><span class="eyebrow">Free personal mock exam</span><h1>Practice with<br><em>purpose.</em></h1><p class="lead">A realistic CCA-F practice experience for multi-agent orchestration, context management, and tool design.</p><div class="hero-actions"><button id="beginButton" class="button primary">Start mock exam <span aria-hidden="true">-&gt;</span></button><button class="button secondary" data-portal="practice">Practice exam</button><span class="quiet-note">No account needed</span></div></div>
+          <div class="hero-copy"><span class="eyebrow">Free personal mock exam</span><h1>Practice with<br><em>purpose.</em></h1><p class="lead">A realistic CCA-F practice experience for multi-agent orchestration, context management, and tool design.</p><div class="hero-actions"><button id="beginButton" class="button primary" type="button">Start mock exam <span aria-hidden="true">-&gt;</span></button><button class="button secondary" data-portal="practice">Practice exam</button><span class="quiet-note">No account needed</span></div></div>
           <aside class="exam-preview card" aria-label="Exam overview"><div class="preview-head"><span>CCA-F / MOCK 01</span><i></i><span>READY</span></div><h2>Architect the<br>right answer.</h2><p>One focused sitting. Detailed feedback when you finish.</p><div class="preview-rule"></div><div class="exam-details"><div><strong id="questionCount">40</strong><span>Questions</span></div><div><strong>120</strong><span>Minutes</span></div><div><strong>4</strong><span>Domains</span></div></div></aside>
         </div>
         <section id="exam-info" class="feature-row"><article><span class="feature-index">01</span><h2>Timed simulation</h2><p>Build your pacing under a focused 120-minute countdown.</p></article><article><span class="feature-index">02</span><h2>Focused navigation</h2><p>Move freely between questions and keep track of your progress.</p></article><article><span class="feature-index">03</span><h2>Feedback that teaches</h2><p>Review every answer, the official answer, and its justification.</p></article></section>
@@ -51,16 +51,40 @@
       <section id="results" class="results hidden">
         <section class="result-summary card">
           <span class="eyebrow">Exam complete</span><h1>Your results</h1>
+          <div class="candidate-result"><span>Candidate</span><strong id="candidateResultName">-</strong></div>
           <div class="score-layout"><div class="score-ring"><strong id="scorePercent">0%</strong><span>score</span></div><div><p id="scoreLine" class="score-line"></p><p id="scoreMessage" class="score-message"></p><div class="score-breakdown"><span><b id="correctCount">0</b> Correct</span><span><b id="incorrectCount">0</b> Incorrect</span><span><b id="unansweredCount">0</b> Unanswered</span></div></div></div>
           <button id="restartButton" class="button ghost" type="button">Start a new attempt</button>
         </section>
         <section class="review-header"><div><span class="eyebrow">Answer review</span><h2>Answers &amp; justifications</h2></div><div class="review-filter" role="group" aria-label="Review filter"><button data-filter="all" class="filter active">All</button><button data-filter="incorrect" class="filter">Incorrect</button><button data-filter="correct" class="filter">Correct</button></div></section>
         <div id="reviewList" class="review-list"></div>
       </section>
+      <div class="dashboard-toolbar">
+        <div>
+        <label for="candidateSelector">Candidate</label>
+        <select id="candidateSelector"><option value=""> Select Candidate</option></select>
+        </div>
+        <button id="resetCandidateHistory" class="button ghost">Reset History</button>
+      </div>
       <section id="dashboard" class="portal hidden"><header class="portal-header"><button class="back-link" data-portal="welcome">&larr; Home</button><span class="eyebrow">Personal dashboard</span><h1>Your preparation status</h1><p>Scores are saved only in this browser.</p></header><div id="dashboardStats" class="dashboard-stats"></div><section class="card history-card"><h2>Attempt history</h2><div id="attemptHistory"></div></section></section>
+      <section class="card history-card"><h2>Leaderboard</h2><div id="leaderboardContainer"></div></section>
       <section id="practice" class="portal hidden"><header class="portal-header"><button class="back-link" data-portal="welcome">&larr; Home</button><span class="eyebrow">Practice library</span><h1>Practice every question</h1><p id="practiceCount"></p></header><div class="practice-toolbar"><button id="practicePrevious" class="button ghost" type="button">&larr; Previous</button><span id="practicePosition"></span><button id="practiceNext" class="button secondary" type="button">Next &rarr;</button></div><article id="practiceCard" class="question-card card"></article></section>
     </main>
     <footer>Prepared by <strong>Dhruv Shah</strong></footer>
-    <script src="questions.js"></script><script src="app.js"></script><script src="portal.js"></script>
+    <script src="questions.js"></script><script src="app.js"></script><script src="portal.js"></script><!-- Candidate Registration Modal -->
+    <div id="candidateModal" class="candidate-modal hidden">
+        <div class="candidate-card">
+            <h2>Welcome to CCA-F Mock Test</h2>
+            <p>Please enter your details before starting the exam.</p>
+            <div class="candidate-field">
+                <label for="candidateName">Full Name *</label>
+                <input type="text" id="candidateName" placeholder="Enter your full name" maxlength="50"/>
+            </div>          
+            <div class="candidate-field">
+                <label for="candidateEmail">Email (Optional)</label>
+                <input type="email" id="candidateEmail" placeholder="example@email.com"/>
+            </div>
+           <button id="startExamButton" class="button primary" type="button">Start Exam</button>
+        </div>
+    </div>
   </body>
 </html>
