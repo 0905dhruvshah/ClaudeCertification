@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1220" />
+    <title>CCA-F Mock Test Exam</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="landing.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section id="welcome" class="welcome">
+        <nav class="landing-nav" aria-label="Main navigation"><a class="brand" href="#welcome"><span>CCA</span> / F</a><span class="nav-label">Personal practice environment</span><button class="nav-link" data-portal="practice">Practice</button><button class="nav-link" data-portal="dashboard">Dashboard</button></nav>
+        <div class="hero-grid">
+          <div class="hero-copy"><span class="eyebrow">Free personal mock exam</span><h1>Practice with<br><em>purpose.</em></h1><p class="lead">A realistic CCA-F practice experience for multi-agent orchestration, context management, and tool design.</p><div class="hero-actions"><button id="beginButton" class="button primary">Start mock exam <span aria-hidden="true">-&gt;</span></button><button class="button secondary" data-portal="practice">Practice exam</button><span class="quiet-note">No account needed</span></div></div>
+          <aside class="exam-preview card" aria-label="Exam overview"><div class="preview-head"><span>CCA-F / MOCK 01</span><i></i><span>READY</span></div><h2>Architect the<br>right answer.</h2><p>One focused sitting. Detailed feedback when you finish.</p><div class="preview-rule"></div><div class="exam-details"><div><strong id="questionCount">40</strong><span>Questions</span></div><div><strong>120</strong><span>Minutes</span></div><div><strong>4</strong><span>Domains</span></div></div></aside>
+        </div>
+        <section id="exam-info" class="feature-row"><article><span class="feature-index">01</span><h2>Timed simulation</h2><p>Build your pacing under a focused 120-minute countdown.</p></article><article><span class="feature-index">02</span><h2>Focused navigation</h2><p>Move freely between questions and keep track of your progress.</p></article><article><span class="feature-index">03</span><h2>Feedback that teaches</h2><p>Review every answer, the official answer, and its justification.</p></article></section>
+        <div class="instructions"><h2>Before you begin</h2><ul><li>Select one answer for each question.</li><li>The exam submits automatically when the timer reaches zero.</li><li>Your results appear immediately after submission.</li></ul></div>
+      </section>
+
+      <section id="exam" class="exam hidden" aria-live="polite">
+        <header class="exam-header">
+          <div><span class="eyebrow">CCA-F MOCK TEST</span><h1>Mock Test Exam</h1></div>
+          <div class="exam-header-actions"><button id="quitButton" class="button ghost" type="button">Quit exam</button><div class="timer-wrap"><span>Time remaining</span><strong id="timer" class="timer">02:00:00</strong></div></div>
+        </header>
+        <div class="progress-row"><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div><span id="progressText">0 of 40 answered</span></div>
+        <div class="exam-layout">
+          <aside class="navigator card">
+            <div class="navigator-title"><h2>Question navigator</h2><span id="navCount">0 / 40</span></div>
+            <div id="questionNav" class="question-nav"></div>
+            <div class="legend"><span><i class="answered"></i> Answered</span><span><i class="current"></i> Current</span></div>
+          </aside>
+          <section class="question-area">
+            <article class="question-card card">
+              <div class="question-top"><span id="questionNumber" class="question-number">Question 1</span><span id="answerState" class="answer-state">Not answered</span></div>
+              <h2 id="questionText"></h2>
+              <form id="options" class="options"></form>
+            </article>
+            <div class="question-actions"><button id="previousButton" class="button ghost" type="button">← Previous</button><button id="nextButton" class="button secondary" type="button">Next question →</button></div>
+          </section>
+        </div>
+        <div class="submit-row"><p id="submitHint">You can return to any question before submitting.</p><button id="submitButton" class="button primary" type="button">Submit exam</button></div>
+      </section>
+
+      <section id="results" class="results hidden">
+        <section class="result-summary card">
+          <span class="eyebrow">Exam complete</span><h1>Your results</h1>
+          <div class="score-layout"><div class="score-ring"><strong id="scorePercent">0%</strong><span>score</span></div><div><p id="scoreLine" class="score-line"></p><p id="scoreMessage" class="score-message"></p><div class="score-breakdown"><span><b id="correctCount">0</b> Correct</span><span><b id="incorrectCount">0</b> Incorrect</span><span><b id="unansweredCount">0</b> Unanswered</span></div></div></div>
+          <button id="restartButton" class="button ghost" type="button">Start a new attempt</button>
+        </section>
+        <section class="review-header"><div><span class="eyebrow">Answer review</span><h2>Answers &amp; justifications</h2></div><div class="review-filter" role="group" aria-label="Review filter"><button data-filter="all" class="filter active">All</button><button data-filter="incorrect" class="filter">Incorrect</button><button data-filter="correct" class="filter">Correct</button></div></section>
+        <div id="reviewList" class="review-list"></div>
+      </section>
+      <section id="dashboard" class="portal hidden"><header class="portal-header"><button class="back-link" data-portal="welcome">&larr; Home</button><span class="eyebrow">Personal dashboard</span><h1>Your preparation status</h1><p>Scores are saved only in this browser.</p></header><div id="dashboardStats" class="dashboard-stats"></div><section class="card history-card"><h2>Attempt history</h2><div id="attemptHistory"></div></section></section>
+      <section id="practice" class="portal hidden"><header class="portal-header"><button class="back-link" data-portal="welcome">&larr; Home</button><span class="eyebrow">Practice library</span><h1>Practice every question</h1><p id="practiceCount"></p></header><div class="practice-toolbar"><button id="practicePrevious" class="button ghost" type="button">&larr; Previous</button><span id="practicePosition"></span><button id="practiceNext" class="button secondary" type="button">Next &rarr;</button></div><article id="practiceCard" class="question-card card"></article></section>
+    </main>
+    <footer>Prepared by <strong>Dhruv Shah</strong></footer>
+    <script src="questions.js"></script><script src="app.js"></script><script src="portal.js"></script>
+  </body>
+</html>
