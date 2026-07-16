@@ -1,7 +1,7 @@
 /* Dashboard and practice mode. Data stays in the visitor's browser via localStorage. */
 const portal = { practiceIndex: 0, practiceAnswers: {} };
 const portalSections = ['welcome', 'exam', 'results', 'dashboard', 'practice'];
-function showPortal(name) { portalSections.forEach(id => document.getElementById(id).classList.toggle('hidden', id !== name)); if (name === 'dashboard') renderDashboard(); if (name === 'practice') renderPractice(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function showPortal(name) { portalSections.forEach(id => document.getElementById(id).classList.toggle("hidden", id !== name) ); if (name === "dashboard") { candidateModal.classList.remove("hidden"); candidateNameInput.focus(); renderDashboard(); } else { candidateModal.classList.add("hidden"); } if (name === "practice") { renderPractice(); } window.scrollTo({ top: 0, behavior: "smooth" }); }
 function getCandidateStorageKey(name) { return `ccaf-attempts-${ name .trim() .toLowerCase() .replace(/\s+/g, "-") }`; } 
 function attemptData(candidateName) { if (!candidateName) return []; return JSON.parse( localStorage.getItem( getCandidateStorageKey(candidateName) ) || "[]" ); } 
 function allCandidates() { return JSON.parse( localStorage.getItem("ccaf-users") || "[]" ); }
