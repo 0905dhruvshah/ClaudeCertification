@@ -615,4 +615,146 @@ const QUESTIONS = [{"question":"After the web search agent and document analysis
     },
     answer: "B",
     justification: "The coordinator orchestrates the workflow, ensuring each specialized agent contributes effectively while producing one coherent final result."
-}];
+},
+{
+    question: "Production data shows that in 12% of cases, your agent skips get_customer entirely and calls lookup_order using only the customer's stated name, occasionally leading to misidentified accounts and incorrect refunds. What change would most effectively address this reliability issue?",
+    options: {
+      A: "Add a programmatic prerequisite that blocks lookup_order and process_refund calls until get_customer has returned a verified customer ID.",
+      B: "Enhance the system prompt to state that customer verification via get_customer is mandatory before any order operations.",
+      C: "Add few-shot examples showing the agent always calling get_customer first, even when customers volunteer order details.",
+      D: "Implement a routing classifier that analyzes each request and enables only the subset of tools appropriate for that request type."
+    },
+    answer: "A",
+    justification: "When a specific tool sequence is required for critical business logic (like verifying customer identity before processing refunds), programmatic enforcement provides deterministic guarantees that prompt-based approaches cannot. Options B and C rely on probabilistic LLM compliance, which is insufficient when errors have financial consequences. Option D addresses tool availability rather than tool ordering, which is not the actual problem."
+  },
+
+  {
+    question: "Production logs show the agent frequently calls get_customer when users ask about orders (e.g., 'check my order #12345'), instead of calling lookup_order. Both tools have minimal descriptions ('Retrieves customer information' / 'Retrieves order details') and accept similar identifier formats. What's the most effective first step to improve tool selection reliability?",
+    options: {
+      A: "Add few-shot examples to the system prompt demonstrating correct tool selection patterns, with 5-8 examples showing order-related queries routing to lookup_order.",
+      B: "Expand each tool's description to include input formats it handles, example queries, edge cases, and boundaries explaining when to use it versus similar tools.",
+      C: "Implement a routing layer that parses user input before each turn and pre-selects the appropriate tool based on detected keywords and identifier patterns.",
+      D: "Consolidate both tools into a single lookup_entity tool that accepts any identifier and internally determines which backend to query."
+    },
+    answer: "B",
+    justification: "Tool descriptions are the primary mechanism LLMs use for tool selection. When descriptions are minimal, models lack the context to differentiate between similar tools. Option B directly addresses this root cause with a low-effort, high-leverage fix. Few-shot examples (A) add token overhead without fixing the underlying issue. A routing layer (C) is over-engineered and bypasses the LLM's natural language understanding. Consolidating tools (D) is a valid architectural choice but requires more effort than a 'first step' warrants when the immediate problem is inadequate descriptions."
+  },
+
+  {
+    question: "Your agent achieves 55% first-contact resolution, well below the 80% target. Logs show it escalates straightforward cases (standard damage replacements with photo evidence) while attempting to autonomously handle complex situations requiring policy exceptions. What's the most effective way to improve escalation calibration?",
+    options: {
+      A: "Add explicit escalation criteria to your system prompt with few-shot examples demonstrating when to escalate versus resolve autonomously.",
+      B: "Have the agent self-report a confidence score (1-10) before each response and automatically route requests to humans when confidence falls below a threshold.",
+      C: "Deploy a separate classifier model trained on historical tickets to predict which requests need escalation before the main agent begins processing.",
+      D: "Implement sentiment analysis to detect customer frustration levels and automatically escalate when negative sentiment exceeds a threshold."
+    },
+    answer: "A",
+    justification: "Adding explicit escalation criteria with few-shot examples directly addresses the root cause: unclear decision boundaries. This is the proportionate first response before adding infrastructure. Option B fails because LLM self-reported confidence is poorly calibrated—the agent is already incorrectly confident on hard cases. Option C is over-engineered, requiring labeled data and ML infrastructure when prompt optimization hasn't been tried. Option D solves a different problem entirely; sentiment doesn't correlate with case complexity, which is the actual issue."
+  },
+
+  {
+    question: "You want to create a custom /review slash command that runs your team's standard code review checklist. This command should be available to every developer when they clone or pull the repository. Where should you create this command file?",
+    options: {
+      A: "In the .claude/commands/ directory in the project repository.",
+      B: "In ~/.claude/commands/ in each developer's home directory.",
+      C: "In the CLAUDE.md file at the project root.",
+      D: "In a .claude/config.json file with a commands array."
+    },
+    answer: "A",
+    justification: "Project-scoped custom slash commands should be stored in the .claude/commands/ directory within the repository. These commands are version-controlled and automatically available to all developers when they clone or pull the repo. Option B (~/.claude/commands/) is for personal commands that aren't shared via version control. Option C (CLAUDE.md) is for project instructions and context, not command definitions. Option D describes a configuration mechanism that doesn't exist in Claude Code."
+  },
+    {
+    question: "Your customer support agent's context window is frequently exceeded because conversation history includes repeated shipping policies, return policies, and product details that have already been explained. Which context management strategy would most effectively reduce token usage while preserving necessary information?",
+    options: {
+      A: "Increase the model's context window to accommodate the growing conversation history.",
+      B: "Replace older conversation turns with concise summaries that preserve key decisions, facts, and unresolved issues while removing repetitive explanations.",
+      C: "Delete all conversation history older than 10 messages to guarantee the context stays within limits.",
+      D: "Store every previous message in a vector database and retrieve the entire conversation for every new request."
+    },
+    answer: "B",
+    justification: "Summarizing older conversation history preserves the important facts and decisions while significantly reducing token usage. This is the recommended context management strategy for long-running conversations. Increasing the context window (A) only delays the problem and increases cost. Deleting history (C) risks losing important context. Retrieving the full conversation from a vector database (D) defeats the purpose of reducing context size."
+  },
+
+  {
+    question: "Your development team frequently asks Claude Code to generate new REST endpoints, but every engineer receives slightly different implementations because architectural conventions are not consistently applied. What is the best long-term solution?",
+    options: {
+      A: "Create a comprehensive CLAUDE.md file documenting project architecture, coding conventions, preferred patterns, testing requirements, and API standards.",
+      B: "Write a longer prompt every time an engineer asks Claude Code to generate a new endpoint.",
+      C: "Increase the model temperature so the generated implementations become more creative and flexible.",
+      D: "Require every engineer to manually edit the generated code until it matches the team's standards."
+    },
+    answer: "A",
+    justification: "CLAUDE.md provides persistent project-specific instructions that Claude Code automatically considers for every request. This ensures consistent code generation across the team without repeatedly writing lengthy prompts. Options B and D rely on repetitive manual work, while option C would reduce consistency rather than improve it."
+  },
+
+  {
+    question: "An AI agent is responsible for approving expense reimbursements. Company policy states that any reimbursement over $5,000 must receive human approval regardless of supporting documentation. Which implementation best satisfies this requirement?",
+    options: {
+      A: "Prompt the agent to remember that reimbursements above $5,000 require human approval.",
+      B: "Allow the agent to decide autonomously and monitor its performance over time.",
+      C: "Implement deterministic application logic that prevents automatic approval above $5,000 and routes those requests to a human reviewer.",
+      D: "Train the model using more examples of high-value reimbursement requests."
+    },
+    answer: "C",
+    justification: "Business rules with regulatory, financial, or compliance implications should always be enforced programmatically. Prompt instructions and additional training cannot guarantee compliance. Deterministic application logic provides the required safety and consistency."
+  },
+
+  {
+    question: "Your AI application performs document summarization by first retrieving relevant documents from a vector database before sending them to the language model. What is the primary purpose of this Retrieval-Augmented Generation (RAG) approach?",
+    options: {
+      A: "Reduce model latency by minimizing the number of API requests.",
+      B: "Provide the language model with relevant external knowledge that was not included in its original training data.",
+      C: "Replace prompt engineering entirely so no instructions are required.",
+      D: "Automatically fine-tune the model during every user interaction."
+    },
+    answer: "B",
+    justification: "Retrieval-Augmented Generation (RAG) retrieves relevant information from external knowledge sources and provides that information as context to the model. This allows the model to answer using current, domain-specific, or proprietary information without requiring model retraining."
+  },
+    {
+    question: "Your engineering team wants Claude Code to automatically execute unit tests after every code change before presenting the final response. Which Claude Code capability best supports this workflow?",
+    options: {
+      A: "Configure Claude Code to invoke the testing command as part of its tool workflow before completing the task.",
+      B: "Add a reminder to the system prompt asking Claude to remember to run tests whenever code changes.",
+      C: "Increase the context window so Claude can remember previous testing instructions throughout the session.",
+      D: "Fine-tune the model on software engineering datasets containing test execution examples."
+    },
+    answer: "A",
+    justification: "Claude Code can invoke tools and execute commands as part of its workflow. Automating test execution through tools provides deterministic validation rather than relying on prompt instructions or model memory."
+  },
+
+  {
+    question: "A multi-agent application contains a Planner Agent, a Research Agent, and an Execution Agent. The Planner determines the work, the Research Agent gathers information, and the Execution Agent performs the requested actions. What is the primary benefit of this architecture compared to using a single general-purpose agent?",
+    options: {
+      A: "Each specialized agent can focus on a narrow responsibility, improving modularity, maintainability, and overall reliability.",
+      B: "Multiple agents always reduce API costs because fewer prompts are required.",
+      C: "The application no longer requires prompts because agents automatically understand each other's responsibilities.",
+      D: "The architecture guarantees faster responses regardless of workload."
+    },
+    answer: "A",
+    justification: "Multi-agent systems divide responsibilities into specialized components. This improves separation of concerns, maintainability, testing, and reliability. It does not inherently reduce costs or guarantee lower latency."
+  },
+
+  {
+    question: "Your AI assistant must answer questions using an internal company knowledge base that changes every day. Which approach provides the most accurate and maintainable solution?",
+    options: {
+      A: "Fine-tune the language model every day using the latest knowledge base.",
+      B: "Implement Retrieval-Augmented Generation (RAG) so relevant documents are retrieved dynamically at query time.",
+      C: "Increase the prompt length by including the entire knowledge base with every request.",
+      D: "Rely entirely on the model's original training knowledge."
+    },
+    answer: "B",
+    justification: "RAG allows the application to retrieve the latest information at runtime without retraining the model. This provides current, accurate, and scalable access to frequently changing knowledge."
+  },
+
+  {
+    question: "During production monitoring, you discover that your AI agent occasionally generates responses that appear plausible but contradict the retrieved documentation. What is the most effective strategy to reduce these hallucinations?",
+    options: {
+      A: "Require the model to base its answers only on retrieved context and instruct it to acknowledge when sufficient information is unavailable.",
+      B: "Increase the temperature so the model explores more possible answers.",
+      C: "Remove retrieval entirely and rely only on the model's pretrained knowledge.",
+      D: "Expand the context window to include more previous conversation history regardless of relevance."
+    },
+    answer: "A",
+    justification: "Constraining the model to retrieved evidence and allowing it to respond with 'I don't know' when evidence is insufficient is one of the most effective ways to reduce hallucinations in RAG systems. Higher temperature increases variability, removing retrieval eliminates current knowledge, and adding unrelated context does not address the underlying issue."
+  }
+];
