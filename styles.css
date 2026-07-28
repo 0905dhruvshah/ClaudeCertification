@@ -759,21 +759,31 @@ footer strong {
 .back-home-btn:hover i{
     color:white;
 }
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    cursor:default;
+    user-select:none;
 }
 
-.brand i {
-  font-size: 34px;
-  color: #61e6b1;
+.brand i{
+    font-size:34px;
+    color:#61e6b1;
 }
 
-.brand small {
-  display: block;
-  font-size: 12px;
-  color: #9ba9c1;
+.brand span{
+    display:block;
+    font-size:24px;
+    font-weight:800;
+    color:#61e6b1;
+}
+
+.brand small{
+    display:block;
+    font-size:13px;
+    color:#9ba9c1;
+    letter-spacing:.5px;
 }
 .hero-copy h1{
     font-size:3.8rem;
