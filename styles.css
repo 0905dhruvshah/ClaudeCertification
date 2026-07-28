@@ -759,3 +759,54 @@ footer strong {
 .back-home-btn:hover i{
     color:white;
 }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand i {
+  font-size: 34px;
+  color: #61e6b1;
+}
+
+.brand small {
+  display: block;
+  font-size: 12px;
+  color: #9ba9c1;
+}
+
+.hero-copy h1 {
+  font-size: 58px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.hero-copy em {
+  color: #61e6b1;
+  font-style: normal;
+}
+.status-badge {
+  padding: 6px 14px;
+  background: #16a34a;
+  border-radius: 25px;
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+}
+.hero-actions .button i {
+  margin-right: 8px;
+}
+.feature-row article {
+  text-align: center;
+  padding: 25px;
+}
+.feature-row article i {
+  font-size: 34px;
+  margin-bottom: 20px;
+  color: #61e6b1;
+  display: block;
+}
+.instructions h2 i {
+  margin-right: 8px;
+  color: #61e6b1;
+}
