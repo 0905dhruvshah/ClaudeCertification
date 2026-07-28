@@ -7,6 +7,12 @@ const portalSections = ['welcome', 'exam', 'results', 'dashboard', 'practice', "
 
 function showPortal(name) {
     portalSections.forEach(id => document.getElementById(id).classList.toggle("hidden", id !== name));
+    document.querySelectorAll(".nav-link").forEach(btn => {
+        btn.classList.remove("active");
+        if (btn.dataset.portal === name)
+            btn.classList.add("active");
+    });
+
     if (name === "practice") {
         renderPractice();
     }
