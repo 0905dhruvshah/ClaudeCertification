@@ -90,16 +90,17 @@
   align-items: center;
   padding: 78px 5vw 80px;
 }
-.hero-copy h1 {
-  font-size: clamp(3.5rem, 7.4vw, 6.6rem);
-  line-height: 0.91;
-  max-width: 680px;
-  margin: 18px 0 26px;
-  letter-spacing: -0.08em;
+.hero-copy h1{
+    font-size:3.8rem;
+    line-height:1.05;
+    max-width:650px;
+    margin-bottom:20px;
+    font-weight:800;
 }
-.hero-copy h1 em {
-  color: var(--accent);
-  font-style: normal;
+.hero-copy em{
+    color:#61e6b1;
+    font-style:normal;
+    display:inline;
 }
 .hero-copy .lead {
   max-width: 555px;
@@ -221,9 +222,6 @@
   .hero-grid {
     display: block;
     padding: 48px 5px;
-  }
-  .hero-copy h1 {
-    font-size: 3.55rem;
   }
   .exam-preview {
     margin-top: 47px;
