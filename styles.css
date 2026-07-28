@@ -725,3 +725,37 @@ footer strong {
 .resource-section:nth-child(4) {
   border-left: 5px solid #32d296;
 }
+.back-home-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 22px;
+    margin-bottom:24px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:12px;
+    color:#dbe7ff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .30s ease;
+    backdrop-filter:blur(10px);
+}
+.back-home-btn i{
+    color:#61e6b1;
+    font-size:16px;
+}
+.back-home-btn:hover{
+    transform:translateY(-3px);
+    background:linear-gradient(
+        135deg,
+        #7c5cff,
+        #4fd1ff
+    );
+    color:white;
+    border-color:transparent;
+    box-shadow:0 12px 28px rgba(124,92,255,.35);
+}
+.back-home-btn:hover i{
+    color:white;
+}
