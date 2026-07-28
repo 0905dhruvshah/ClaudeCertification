@@ -10,15 +10,6 @@
   align-items: center;
   gap: 25px;
 }
-.brand {
-  color: var(--ink);
-  font: 700 1rem "DM Mono", monospace;
-  letter-spacing: 0.09em;
-  text-decoration: none;
-}
-.brand span {
-  color: var(--accent);
-}
 .nav-label {
   font-size: 0.74rem;
   color: var(--muted);
