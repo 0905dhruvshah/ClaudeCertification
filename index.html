@@ -58,14 +58,7 @@
         <section class="review-header"><div><span class="eyebrow">Answer review</span><h2>Answers &amp; justifications</h2></div><div class="review-filter" role="group" aria-label="Review filter"><button data-filter="all" class="filter active">All</button><button data-filter="incorrect" class="filter">Incorrect</button><button data-filter="correct" class="filter">Correct</button></div></section>
         <div id="reviewList" class="review-list"></div>
       </section>
-      <div class="dashboard-toolbar">
-        <div>
-        <label for="candidateSelector">Candidate</label>
-        <select id="candidateSelector"><option value=""> Select Candidate</option></select>
-        </div>
-        <button id="resetCandidateHistory" class="button ghost">Reset History</button>
-      </div>
-      <section id="dashboard" class="portal hidden"><header class="portal-header"><button class="back-link" data-portal="welcome">&larr; Home</button><span class="eyebrow">Personal dashboard</span><h1>Your preparation status</h1><p>Scores are saved only in this browser.</p></header><div id="dashboardStats" class="dashboard-stats"></div><section class="card history-card"><h2>Attempt history</h2><div id="attemptHistory"></div></section><section class="card history-card"><h2>Leaderboard</h2><div id="leaderboardContainer"></div></section></section>
+      <section id="dashboard" class="portal hidden"><div class="dashboard-toolbar"><div><label for="candidateSelector">Candidate</label><select id="candidateSelector"><option value=""> Select Candidate</option></select></div><button id="resetCandidateHistory" class="button ghost">Reset History</button></div><header class="portal-header"><button class="back-link" data-portal="welcome">&larr; Home</button><span class="eyebrow">Personal dashboard</span><h1>Your preparation status</h1><p>Scores are saved only in this browser.</p></header><div id="dashboardStats" class="dashboard-stats"></div><section class="card history-card"><h2>Attempt history</h2><div id="attemptHistory"></div></section><section class="card history-card"><h2>Leaderboard</h2><div id="leaderboardContainer"></div></section></section>
       <section id="practice" class="portal hidden"><header class="portal-header"><button class="back-link" data-portal="welcome">&larr; Home</button><span class="eyebrow">Practice library</span><h1>Practice every question</h1><p id="practiceCount"></p></header><div class="practice-toolbar"><button id="practicePrevious" class="button ghost" type="button">&larr; Previous</button><span id="practicePosition"></span><button id="practiceNext" class="button secondary" type="button">Next &rarr;</button></div><article id="practiceCard" class="question-card card"></article></section>
     </main>
     <footer>Prepared by <strong>Dhruv Shah</strong></footer>
