@@ -60,11 +60,11 @@ body {
   letter-spacing: -0.055em;
   margin: 13px 0 17px;
 }
-.lead {
-  max-width: 650px;
-  color: var(--muted);
-  line-height: 1.75;
-  font-size: 1.04rem;
+.lead{
+    max-width:650px;
+    font-size:18px;
+    line-height:1.8;
+    color:#b8c2d9;
 }
 .exam-details {
   display: flex;
@@ -775,15 +775,17 @@ footer strong {
   font-size: 12px;
   color: #9ba9c1;
 }
-
-.hero-copy h1 {
-  font-size: 58px;
-  line-height: 1.1;
-  margin-bottom: 20px;
+.hero-copy h1{
+    font-size:3.8rem;
+    line-height:1.05;
+    max-width:650px;
+    margin-bottom:20px;
+    font-weight:800;
 }
-.hero-copy em {
-  color: #61e6b1;
-  font-style: normal;
+.hero-copy em{
+    color:#61e6b1;
+    font-style:normal;
+    display:inline;
 }
 .status-badge {
   padding: 6px 14px;
