@@ -53,7 +53,17 @@ function renderDashboard() {
     stats.innerHTML = ` <article class="stat-card card"> <span>Candidate</span> <strong>${selector.value}</strong> </article> <article class="stat-card card"> <span>Average</span> <strong>${average}</strong> </article> <article class="stat-card card"> <span>Best</span> <strong>${best}</strong> </article> <article class="stat-card card"> <span>Latest</span> <strong>${latest.scaledScore}</strong> </article> <article class="stat-card card"> <span>Attempts</span> <strong>${attempts.length}</strong> </article> `;
     history.innerHTML = attempts.map(item => ` <div class="attempt-row"> <span> ${new Date(item.date).toLocaleDateString()} </span> <strong>${item.scaledScore}</strong> <small> ${item.correct}/${item.total} Correct </small> </div> `).join("");
 }
-
+function renderPracticeNavigator() {
+    const nav = document.getElementById("practiceQuestionNav");
+    nav.innerHTML = QUESTION_BANK.map((q, index) => `<buttonclass="practice-nav-button${portal.practiceAnswers[index] ? "answered" : ""}${portal.practiceIndex===index ? "current" : ""}"data-index="${index}">${index+1}</button>`).join("");
+    nav.querySelectorAll("button").forEach(btn => {
+        btn.onclick = () => {
+            portal.practiceIndex = Number(btn.dataset.index);
+            renderPractice();
+        };
+    });
+    document.getElementById("practiceNavCount").textContent = `${Object.keys(portal.practiceAnswers).length}/${QUESTION_BANK.length}`;
+}
 function renderPractice() {
     const q = QUESTION_BANK[portal.practiceIndex];
     const answer = portal.practiceAnswers[portal.practiceIndex];
@@ -66,6 +76,7 @@ function renderPractice() {
         portal.practiceAnswers[portal.practiceIndex] = button.dataset.answer;
         renderPractice();
     }));
+    renderPracticeNavigator();
 }
 document.querySelectorAll('[data-portal]').forEach(button => button.addEventListener('click', () => showPortal(button.dataset.portal)));
 document.getElementById('practicePrevious').addEventListener('click', () => {
