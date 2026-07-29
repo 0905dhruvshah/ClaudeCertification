@@ -145,7 +145,7 @@ function submitPrompt() {
     if (window.confirm(message)) submitExam(false);
 }
 
-function submitExam(expired) {
+async function submitExam(expired) {
     if (state.submitted) return;
     state.submitted = true;
     clearInterval(state.interval);
@@ -157,6 +157,27 @@ function submitExam(expired) {
     const scaledScore = Math.round((correct / QUESTIONS.length) * 1000);
     const passingScore = 750;
     const passed = scaledScore >= passingScore;
+    try {
+        await fetch(API_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                name:currentCandidate.name,
+                email:currentCandidate.email,
+                status:passed?"PASS":"FAIL",
+                score:scaledScore,
+                correct:correct,
+                wrong:QUESTIONS.length-correct,
+                percentage:percent,
+                attempt:1
+            })
+        });
+    }
+    catch(error){
+        console.error(error);
+    }
     const storageKey = getCandidateStorageKey(currentCandidate.name);
     const attempts = JSON.parse(localStorage.getItem(storageKey) || "[]");
     attempts.unshift({
