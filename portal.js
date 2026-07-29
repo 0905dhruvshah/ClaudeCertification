@@ -55,12 +55,18 @@ function renderDashboard() {
 }
 function renderPracticeNavigator() {
     const nav = document.getElementById("practiceQuestionNav");
-    nav.innerHTML = QUESTION_BANK.map((q, index) => `<buttonclass="practice-nav-button${portal.practiceAnswers[index] ? "answered" : ""}${portal.practiceIndex===index ? "current" : ""}"data-index="${index}">${index+1}</button>`).join("");
-    nav.querySelectorAll("button").forEach(btn => {
+    nav.innerHTML = "";
+    QUESTION_BANK.forEach((q, index) => {
+        const btn = document.createElement("button");
+        btn.className = "practice-nav-button";
+        if (portal.practiceIndex === index) btn.classList.add("current");
+        if (portal.practiceAnswers[index]) btn.classList.add("answered");
+        btn.textContent = index + 1;
         btn.onclick = () => {
-            portal.practiceIndex = Number(btn.dataset.index);
+            portal.practiceIndex = index;
             renderPractice();
         };
+        nav.appendChild(btn);
     });
     document.getElementById("practiceNavCount").textContent = `${Object.keys(portal.practiceAnswers).length}/${QUESTION_BANK.length}`;
 }
