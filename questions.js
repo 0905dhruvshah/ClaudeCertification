@@ -1098,5 +1098,1743 @@ const QUESTIONS = [
     },
     "answer": "A",
     "justification": "Constraining the model to retrieved evidence and allowing it to respond with 'I don't know' when evidence is insufficient is one of the most effective ways to reduce hallucinations in RAG systems. Higher temperature increases variability, removing retrieval eliminates current knowledge, and adding unrelated context does not address the underlying issue."
+  },
+  {
+    "question": "Claude returned { \"stop_reason\":\"tool_use\" } What should the application do?",
+    "options": {
+      "A": "Return the answer",
+      "B": "Execute tool and continue",
+      "C": "Retry request",
+      "D": "Increase max_tokens"
+    },
+    "answer": "B",
+    "justification": "stop_reason \"tool_use\" means Claude has paused for the application to run the requested tool and return a tool_result. The loop then continues."
+  },
+  {
+    "question": "Claude returns inconsistent JSON for invoices. What is the best improvement?",
+    "options": {
+      "A": "Increase temperature",
+      "B": "Add few-shot examples",
+      "C": "Increase max_tokens",
+      "D": "Remove the schema"
+    },
+    "answer": "B",
+    "justification": "Few-shot examples demonstrate the exact JSON shape expected. Temperature and token limits do not govern output structure."
+  },
+  {
+    "question": "A prompt contains instructions, examples, context, and formatting rules, making it difficult to read. What is the best improvement?",
+    "options": {
+      "A": "Increase the context window",
+      "B": "Use XML tags to organize the prompt",
+      "C": "Add more examples",
+      "D": "Increase temperature"
+    },
+    "answer": "B",
+    "justification": "XML tags delimit sections so Claude can tell instructions, examples, context and formatting rules apart."
+  },
+  {
+    "question": "You have a reusable prompt used by hundreds of customers, but only the customer name changes. What is the best approach?",
+    "options": {
+      "A": "Create separate prompts for each customer",
+      "B": "Use prompt variables",
+      "C": "Increase max_tokens",
+      "D": "Use few-shot examples"
+    },
+    "answer": "B",
+    "justification": "Prompt variables keep a single template with one substituted value instead of duplicating the prompt per customer."
+  },
+  {
+    "question": "Your company has 50,000 knowledge base articles, but users typically need information from only 2–3 articles. Best solution?",
+    "options": {
+      "A": "Increase the context window",
+      "B": "Use RAG to retrieve relevant articles",
+      "C": "Increase max_tokens",
+      "D": "Use higher temperature"
+    },
+    "answer": "B",
+    "justification": "RAG retrieves only the two or three relevant articles. Loading all 50,000 wastes context and dilutes attention."
+  },
+  {
+    "question": "Claude starts missing important details after adding thousands of pages. Best improvement?",
+    "options": {
+      "A": "Increase max_tokens",
+      "B": "Add more documents",
+      "C": "Retrieve fewer, relevant documents",
+      "D": "Increase temperature"
+    },
+    "answer": "C",
+    "justification": "This is attention dilution. Retrieving fewer, more relevant documents restores focus; adding more context makes it worse."
+  },
+  {
+    "question": "Your organization has 100,000 internal policy documents. Employees usually need information from only one or two. What is the best approach?",
+    "options": {
+      "A": "Increase the context window",
+      "B": "Send all policy documents",
+      "C": "Use RAG to retrieve relevant documents",
+      "D": "Increase max_tokens"
+    },
+    "answer": "C",
+    "justification": "Top-K retrieval surfaces only the one or two policy documents that matter for the question."
+  },
+  {
+    "question": "Claude starts missing important facts because the application includes hundreds of irrelevant documents with every request. Best improvement?",
+    "options": {
+      "A": "Increase temperature",
+      "B": "Retrieve fewer, relevant documents",
+      "C": "Increase max_tokens",
+      "D": "Use Message Batches"
+    },
+    "answer": "B",
+    "justification": "Irrelevant documents cause attention dilution. The fix is retrieval precision, not a bigger budget."
+  },
+  {
+    "question": "A coordinator sends the entire project to every worker. Responses are slow and redundant. What is the best improvement?",
+    "options": {
+      "A": "Increase the context window",
+      "B": "Use Progressive Delegation",
+      "C": "Increase temperature",
+      "D": "Use Message Batches"
+    },
+    "answer": "B",
+    "justification": "Progressive Delegation gives each worker only the context its subtask requires, cutting latency and redundancy."
+  },
+  {
+    "question": "The final report omits the healthcare section. The healthcare worker was never invoked. Who is most likely responsible?",
+    "options": {
+      "A": "Healthcare worker",
+      "B": "Coordinator",
+      "C": "Claude API",
+      "D": "Vector database"
+    },
+    "answer": "B",
+    "justification": "The coordinator owns decomposition and dispatch. A worker that was never invoked is a coordinator failure."
+  },
+  {
+    "question": "Your team repeats the same coding instructions in every prompt. Best solution?",
+    "options": {
+      "A": "Longer prompts",
+      "B": "CLAUDE.md",
+      "C": "Higher temperature",
+      "D": "Bigger context"
+    },
+    "answer": "B",
+    "justification": "CLAUDE.md persists project coding instructions so they do not have to be restated in every prompt."
+  },
+  {
+    "question": "Your team wants Claude Code to always use the company's coding standards without repeating them in every prompt. What is the best solution?",
+    "options": {
+      "A": "System Prompt",
+      "B": "CLAUDE.md",
+      "C": "Tool Description",
+      "D": "Increase Context Window"
+    },
+    "answer": "B",
+    "justification": "CLAUDE.md is the persistent project instruction file Claude Code reads on every session."
+  },
+  {
+    "question": "You need to migrate a large monorepo from one authentication library to another. What should you do first?",
+    "options": {
+      "A": "Edit files immediately",
+      "B": "Use Plan Mode to analyze and propose changes",
+      "C": "Increase temperature",
+      "D": "Use Message Batches API"
+    },
+    "answer": "B",
+    "justification": "Plan Mode analyses the repository and proposes a step-by-step migration plan before any file is edited."
+  },
+  {
+    "question": "Which Claude Code feature is best suited for reusable expertise such as security reviews or documentation generation?",
+    "options": {
+      "A": "Max Tokens",
+      "B": "Agent Skills",
+      "C": "Stop Sequences",
+      "D": "Temperature"
+    },
+    "answer": "B",
+    "justification": "Agent Skills package reusable expertise and standardized workflows such as security reviews."
+  },
+  {
+    "question": "Claude needs to read a project's README.md. Which MCP capability should be used?",
+    "options": {
+      "A": "Tool",
+      "B": "Resource",
+      "C": "Prompt",
+      "D": "Scratchpad"
+    },
+    "answer": "B",
+    "justification": "Reading a file is read-only data exposure, which maps to an MCP Resource rather than a Tool."
+  },
+  {
+    "question": "Your team wants Claude to trigger deployments to Kubernetes. What should be exposed through MCP?",
+    "options": {
+      "A": "Resource",
+      "B": "Tool",
+      "C": "System Prompt",
+      "D": "Context Window"
+    },
+    "answer": "B",
+    "justification": "Triggering a deployment is an action with side effects, which maps to an MCP Tool."
+  },
+  {
+    "question": "Where do you configure which MCP servers Claude can use?",
+    "options": {
+      "A": "CLAUDE.md",
+      "B": "README.md",
+      "C": "mcp.json",
+      "D": "package.json"
+    },
+    "answer": "C",
+    "justification": "mcp.json declares which MCP servers are available to Claude."
+  },
+  {
+    "question": "A team keeps forgetting to run tests before committing. What is the best solution?",
+    "options": {
+      "A": "Increase context",
+      "B": "Add Hook",
+      "C": "Increase temperature",
+      "D": "Use Message Batch"
+    },
+    "answer": "B",
+    "justification": "Hooks fire automatically on lifecycle events, so the step cannot be forgotten by a developer."
+  },
+  {
+    "question": "Your organization wants every pull request to automatically trigger a security review. What is the best solution?",
+    "options": {
+      "A": "Increase temperature",
+      "B": "Use a Hook to invoke a Security Skill",
+      "C": "Use Message Batches",
+      "D": "Increase context window"
+    },
+    "answer": "B",
+    "justification": "A Hook triggers on the pull request event and invokes the Security Skill that performs the review."
+  },
+  {
+    "question": "A nightly pipeline generates release notes and updates documentation without user interaction. Which Claude Code feature is most appropriate?",
+    "options": {
+      "A": "Interactive chat",
+      "B": "Headless Mode",
+      "C": "Streaming",
+      "D": "Scratchpads"
+    },
+    "answer": "B",
+    "justification": "Headless Mode runs Claude Code non-interactively, which is what an unattended nightly pipeline needs."
+  },
+  {
+    "question": "A repository contains 300,000 files. Claude needs to review one pull request. What is the best approach?",
+    "options": {
+      "A": "Load the entire repository into context",
+      "B": "Analyze only the files relevant to the pull request and surrounding context",
+      "C": "Increase max_tokens",
+      "D": "Use higher temperature"
+    },
+    "answer": "B",
+    "justification": "Analyse only the files in the pull request and their dependencies. Loading 300,000 files dilutes attention."
+  },
+  {
+    "question": "A customer asks: \"What is the current status of Order #45678?\" The order status changes every few minutes. What is the best architecture?",
+    "options": {
+      "A": "Store the order status in the system prompt.",
+      "B": "Use RAG with company documentation.",
+      "C": "Use an order lookup tool.",
+      "D": "Ask Claude to estimate the status."
+    },
+    "answer": "C",
+    "justification": "Order status is live, frequently changing data, so it must come from a tool lookup rather than RAG or the prompt."
+  },
+  {
+    "question": "Claude returns: { \"stop_reason\": \"tool_use\" } What should your application do?",
+    "options": {
+      "A": "Display the response to the user.",
+      "B": "Ignore it.",
+      "C": "Execute the requested tool and continue the conversation.",
+      "D": "Retry the request with higher temperature."
+    },
+    "answer": "C",
+    "justification": "tool_use signals that the application must execute the tool and return the result to continue the conversation."
+  },
+  {
+    "question": "Claude frequently selects the wrong tool because two tools have nearly identical descriptions. Best improvement?",
+    "options": {
+      "A": "Increase max_tokens.",
+      "B": "Improve the tool descriptions.",
+      "C": "Increase temperature.",
+      "D": "Use RAG."
+    },
+    "answer": "B",
+    "justification": "Claude selects tools from their descriptions, so near-identical descriptions must be disambiguated."
+  },
+  {
+    "question": "Your refund policy requires: ● Order exists ● Paid ● Within 30 days Where should this logic be enforced?",
+    "options": {
+      "A": "Claude prompt",
+      "B": "Tool description",
+      "C": "Application code",
+      "D": "JSON Schema"
+    },
+    "answer": "C",
+    "justification": "Refund eligibility is a business rule. Rules belong in application code, not in prompts or schemas."
+  },
+  {
+    "question": "Claude must always call a validation tool before answering. Which tool_choice is most appropriate?",
+    "options": {
+      "A": "auto",
+      "B": "any",
+      "C": "none",
+      "D": "high"
+    },
+    "answer": "B",
+    "justification": "tool_choice \"any\" forces Claude to call a tool on that turn rather than answering directly."
+  },
+  {
+    "question": "Claude returns inconsistent invoice JSON. Best improvement?",
+    "options": {
+      "A": "Increase temperature.",
+      "B": "Add few-shot examples.",
+      "C": "Increase max_tokens.",
+      "D": "Use streaming."
+    },
+    "answer": "B",
+    "justification": "Few-shot examples anchor a consistent output structure across invoices."
+  },
+  {
+    "question": "A reusable prompt changes only the customer's name. Best design?",
+    "options": {
+      "A": "Duplicate prompts.",
+      "B": "Variables.",
+      "C": "Increase context.",
+      "D": "XML."
+    },
+    "answer": "B",
+    "justification": "A variable substitutes the one changing value into a single reusable template."
+  },
+  {
+    "question": "Your prompt contains instructions, examples, context, and formatting requirements. How should you organize it?",
+    "options": {
+      "A": "XML tags",
+      "B": "Larger context",
+      "C": "Higher temperature",
+      "D": "RAG"
+    },
+    "answer": "A",
+    "justification": "XML tags structure a multi-part prompt so each section is unambiguous."
+  },
+  {
+    "question": "Employees search 40,000 internal documents. Only three are usually relevant. Best architecture?",
+    "options": {
+      "A": "Send all documents.",
+      "B": "Increase context.",
+      "C": "Use RAG.",
+      "D": "Increase max_tokens."
+    },
+    "answer": "C",
+    "justification": "RAG retrieves the small number of relevant documents instead of sending all 40,000."
+  },
+  {
+    "question": "A customer asks for today's account balance. Should RAG be used?",
+    "options": {
+      "A": "Yes",
+      "B": "No, use a live lookup tool.",
+      "C": "Use XML.",
+      "D": "Use Message Batches."
+    },
+    "answer": "B",
+    "justification": "An account balance is live data. RAG serves static documents; balances require a tool lookup."
+  },
+  {
+    "question": "Claude begins missing important information because thousands of irrelevant pages are included. Best improvement?",
+    "options": {
+      "A": "Add even more context.",
+      "B": "Retrieve only relevant documents.",
+      "C": "Increase temperature.",
+      "D": "Increase tokens."
+    },
+    "answer": "B",
+    "justification": "Thousands of irrelevant pages cause attention dilution. Retrieve only what is relevant."
+  },
+  {
+    "question": "Claude needs to read README.md. Which MCP capability should be used?",
+    "options": {
+      "A": "Tool",
+      "B": "Resource",
+      "C": "Hook",
+      "D": "Skill"
+    },
+    "answer": "B",
+    "justification": "README.md is read-only content, which is exposed as an MCP Resource."
+  },
+  {
+    "question": "Your application needs Claude to deploy a Kubernetes application. What should be exposed?",
+    "options": {
+      "A": "Resource",
+      "B": "Tool",
+      "C": "Scratchpad",
+      "D": "Prompt"
+    },
+    "answer": "B",
+    "justification": "Deploying is an action with side effects, which is exposed as an MCP Tool."
+  },
+  {
+    "question": "Your company wants Claude to access: ● GitHub ● PostgreSQL ● Slack Where should these MCP servers be configured?",
+    "options": {
+      "A": "README.md",
+      "B": "CLAUDE.md",
+      "C": "mcp.json",
+      "D": "package.json"
+    },
+    "answer": "C",
+    "justification": "mcp.json is the configuration file for available MCP servers."
+  },
+  {
+    "question": "A company wants Claude Code to follow coding standards without repeating prompts. Best solution?",
+    "options": {
+      "A": "XML",
+      "B": "CLAUDE.md",
+      "C": "JSON Schema",
+      "D": "MCP"
+    },
+    "answer": "B",
+    "justification": "CLAUDE.md stores the standards so they persist without being repeated per prompt."
+  },
+  {
+    "question": "You must migrate 2,000 source files. First step?",
+    "options": {
+      "A": "Edit immediately.",
+      "B": "Increase temperature.",
+      "C": "Use Plan Mode.",
+      "D": "Use RAG."
+    },
+    "answer": "C",
+    "justification": "Plan Mode first: analyse the repository and propose a plan before touching 2,000 files."
+  },
+  {
+    "question": "Nightly documentation generation runs automatically. Which Claude Code feature is most appropriate?",
+    "options": {
+      "A": "Streaming",
+      "B": "Headless Mode",
+      "C": "Scratchpads",
+      "D": "Variables"
+    },
+    "answer": "B",
+    "justification": "Headless Mode supports unattended, scheduled generation with no interactive session."
+  },
+  {
+    "question": "A research project involves: ● Medical review ● Legal review ● Security review Best architecture?",
+    "options": {
+      "A": "One large prompt.",
+      "B": "Multi-Agent.",
+      "C": "Higher temperature.",
+      "D": "More tokens."
+    },
+    "answer": "B",
+    "justification": "Distinct expert domains are best handled by a coordinator dispatching specialized agents."
+  },
+  {
+    "question": "A report is missing the finance section because no worker was assigned to finance. Who is responsible?",
+    "options": {
+      "A": "Finance Worker",
+      "B": "Coordinator",
+      "C": "Claude API",
+      "D": "Vector Database"
+    },
+    "answer": "B",
+    "justification": "The coordinator decomposes the task and assigns workers, so an unassigned domain is its failure."
+  },
+  {
+    "question": "A simple request is delegated to six specialist agents, increasing latency. Best improvement?",
+    "options": {
+      "A": "Add more workers.",
+      "B": "Progressive Delegation.",
+      "C": "Increase tokens.",
+      "D": "Use RAG."
+    },
+    "answer": "B",
+    "justification": "Progressive Delegation means delegating only when task complexity justifies the extra agents."
+  },
+  {
+    "question": "You want to test two different architectural approaches while preserving the current reasoning path. Best solution?",
+    "options": {
+      "A": "fork_session",
+      "B": "context:fork",
+      "C": "Scratchpad",
+      "D": "Hook"
+    },
+    "answer": "B",
+    "justification": "context:fork branches the reasoning inside the session while leaving the current path intact."
+  },
+  {
+    "question": "Claude continues using outdated customer information after an account update. Best improvement?",
+    "options": {
+      "A": "Increase context.",
+      "B": "Refresh context using tools or retrieval.",
+      "C": "Increase temperature.",
+      "D": "Add examples."
+    },
+    "answer": "B",
+    "justification": "This is stale context. Refresh it with a live tool call or fresh retrieval before answering."
+  },
+  {
+    "question": "A 500-page conversation is making responses slower. Best solution?",
+    "options": {
+      "A": "Increase max_tokens.",
+      "B": "Summary Injection.",
+      "C": "Increase temperature.",
+      "D": "Duplicate history."
+    },
+    "answer": "B",
+    "justification": "Summary Injection compacts old history while preserving the state that still matters."
+  },
+  {
+    "question": "After a tool completes, what should Claude do?",
+    "options": {
+      "A": "Ignore the result.",
+      "B": "Inspect the result and determine the next action.",
+      "C": "End the conversation.",
+      "D": "Increase context."
+    },
+    "answer": "B",
+    "justification": "After a tool_result returns, Claude inspects it and decides the next action in the loop."
+  },
+  {
+    "question": "Which of the following best represents a secure banking architecture?",
+    "options": {
+      "A": "Claude decides whether to transfer money.",
+      "B": "Claude checks balances using memory.",
+      "C": "Application enforces business rules while Claude uses tools for information and communication.",
+      "D": "RAG performs money transfers."
+    },
+    "answer": "C",
+    "justification": "Claude retrieves information and communicates; the application enforces the money-movement rules."
+  },
+  {
+    "question": "A customer asks: \"Cancel my order if it hasn't shipped yet.\" Your system has: ● lookup_order tool ● cancel_order tool ● Company cancellation policy stored in internal documentation ● Shipping status changes in real time What is the BEST architecture?",
+    "options": {
+      "A": "Use RAG to retrieve the cancellation policy, let Claude decide eligibility, then call cancel_order.",
+      "B": "Call lookup_order, retrieve the policy with RAG if needed for explanation, enforce eligibility in application code, then call cancel_order only if permitted.",
+      "C": "Let Claude infer eligibility from the policy and call cancel_order directly.",
+      "D": "Put the cancellation rules into the system prompt and allow Claude to decide."
+    },
+    "answer": "B",
+    "justification": "Shipping status is live data and eligibility is a business rule. Look it up with a tool, enforce the rule in code, then act."
+  },
+  {
+    "question": "Claude returns: { \"age\": -12, \"email\": \"abc@example.com\" } The JSON matches the schema exactly. Business rule: Age must be at least 18. What is the BEST solution?",
+    "options": {
+      "A": "Expand the system prompt.",
+      "B": "Increase temperature.",
+      "C": "Add application-level validation after schema validation.",
+      "D": "Use few-shot prompting."
+    },
+    "answer": "C",
+    "justification": "The JSON is structurally valid, so the schema cannot catch it. A minimum age is a business rule requiring application-level validation."
+  },
+  {
+    "question": "A user asks: \"Summarize this three-page article.\" Your architecture immediately launches: ● Research Agent ● Security Agent ● Legal Agent ● Coding Agent ● Documentation Agent What is the biggest architectural issue?",
+    "options": {
+      "A": "Too few workers.",
+      "B": "The coordinator should use Progressive Delegation and avoid unnecessary workers.",
+      "C": "Use RAG.",
+      "D": "Increase the context window."
+    },
+    "answer": "B",
+    "justification": "Summarising a three-page article is trivial. Progressive Delegation says do not spawn specialists that the task does not need."
+  },
+  {
+    "question": "Claude needs to: 1. Read deployment.yaml 2. Restart a Kubernetes deployment Which combination is correct?",
+    "options": {
+      "A": "Resource → Resource",
+      "B": "Tool → Tool",
+      "C": "Resource → Tool",
+      "D": "Tool → Resource"
+    },
+    "answer": "C",
+    "justification": "Reading deployment.yaml is read-only data (Resource); restarting the deployment is an action (Tool)."
+  },
+  {
+    "question": "A repository contains: ● 150 microservices ● 20,000 tests ● 400 contributors A developer requests: \"Replace our authentication framework everywhere.\" What should Claude Code do first?",
+    "options": {
+      "A": "Edit all matching files immediately.",
+      "B": "Generate a migration plan after repository analysis.",
+      "C": "Increase the context window.",
+      "D": "Use RAG."
+    },
+    "answer": "B",
+    "justification": "A sweeping change across 150 microservices needs repository analysis and a proposed plan before any edit."
+  },
+  {
+    "question": "A chatbot receives: ● Entire employee handbook ● Entire engineering handbook ● Entire HR wiki ● Entire finance wiki ● Entire legal wiki For every user question. The answers become less accurate. What is the root cause?",
+    "options": {
+      "A": "Temperature too low.",
+      "B": "Attention dilution from excessive irrelevant context.",
+      "C": "Missing tool descriptions.",
+      "D": "Claude API limitation."
+    },
+    "answer": "B",
+    "justification": "Loading every handbook and wiki for every question is textbook attention dilution."
+  },
+  {
+    "question": "Claude returns: { \"stop_reason\": \"tool_use\" } The application instead responds to the user: \"Your request is being processed.\" What's the architectural mistake?",
+    "options": {
+      "A": "The application should have executed the tool first and continued the conversation.",
+      "B": "Increase max_tokens.",
+      "C": "Use streaming.",
+      "D": "Retry with a different model."
+    },
+    "answer": "A",
+    "justification": "tool_use is not a final answer. The application must execute the tool and continue the conversation."
+  },
+  {
+    "question": "A customer support conversation lasts 400 turns. Older messages are no longer relevant. Best architecture?",
+    "options": {
+      "A": "Increase context indefinitely.",
+      "B": "Inject periodic summaries while preserving critical state.",
+      "C": "Increase temperature.",
+      "D": "Use more agents."
+    },
+    "answer": "B",
+    "justification": "Inject periodic summaries so the conversation stays bounded while critical state is preserved."
+  },
+  {
+    "question": "Every night your company wants to: ● Run security review ● Generate release notes ● Update documentation No human interaction is required. Best design?",
+    "options": {
+      "A": "Interactive Claude chat.",
+      "B": "Headless Mode triggered by scheduled automation using Hooks and Skills.",
+      "C": "Larger prompts.",
+      "D": "RAG."
+    },
+    "answer": "B",
+    "justification": "Unattended nightly work maps to Headless Mode, with Hooks scheduling and Skills doing the work."
+  },
+  {
+    "question": "Claude occasionally forgets that a lookup_customer tool exists and answers from general knowledge instead. Which improvement is most targeted?",
+    "options": {
+      "A": "Improve the lookup_customer tool description.",
+      "B": "Rewrite the system prompt.",
+      "C": "Increase context.",
+      "D": "Use XML prompting."
+    },
+    "answer": "A",
+    "justification": "Tool selection is driven by tool descriptions, so the most targeted fix is improving that description."
+  },
+  {
+    "question": "Your application exposes these tools: ● lookup_customer ● lookup_order ● check_refund_eligibility ● refund_order Business policy: ● Refunds require: ○ Existing customer ○ Existing order ○ Eligible order Claude occasionally calls refund_order directly. What is the BEST solution?",
+    "options": {
+      "A": "Improve the refund_order description.",
+      "B": "Add a stronger system prompt.",
+      "C": "Programmatically orchestrate the workflow and enforce tool order in the application.",
+      "D": "Increase temperature."
+    },
+    "answer": "C",
+    "justification": "A required tool sequence is a business rule. Orchestrate and enforce the order in application code."
+  },
+  {
+    "question": "Your application extracts unknown business documents. Possible tools: ● Invoice Extractor ● Receipt Extractor ● Purchase Order Extractor ● Contract Extractor The application never knows the document type beforehand. Best tool_choice?",
+    "options": {
+      "A": "auto",
+      "B": "any",
+      "C": "specific tool",
+      "D": "none"
+    },
+    "answer": "A",
+    "justification": "The document type is unknown at request time, so tool_choice auto lets Claude pick the right extractor."
+  },
+  {
+    "question": "A software architect wants Claude to compare three different database migration strategies without affecting the current discussion. Best approach?",
+    "options": {
+      "A": "Start three new conversations.",
+      "B": "Use context:fork.",
+      "C": "Use fork_session.",
+      "D": "Increase context."
+    },
+    "answer": "B",
+    "justification": "context:fork explores alternative reasoning paths without disturbing the current discussion."
+  },
+  {
+    "question": "A developer wants to experiment with an entirely different product architecture over several days while preserving today's work. Best solution?",
+    "options": {
+      "A": "Scratchpad",
+      "B": "context:fork",
+      "C": "fork_session",
+      "D": "Summary Injection"
+    },
+    "answer": "C",
+    "justification": "fork_session creates an independent, long-lived branch that persists across days of work."
+  },
+  {
+    "question": "Claude is solving a complex optimization problem involving many intermediate calculations. Where should temporary reasoning be maintained?",
+    "options": {
+      "A": "Final response",
+      "B": "Scratchpad",
+      "C": "System prompt",
+      "D": "RAG"
+    },
+    "answer": "B",
+    "justification": "Scratchpads hold temporary internal reasoning that should not appear in the final response."
+  },
+  {
+    "question": "A customer support chat has exceeded 600 messages. Most early messages are no longer relevant. Best strategy?",
+    "options": {
+      "A": "Keep every message forever.",
+      "B": "Periodically replace old history with summaries while preserving essential facts.",
+      "C": "Increase temperature.",
+      "D": "Use multiple agents."
+    },
+    "answer": "B",
+    "justification": "Replace old turns with summaries while preserving the facts that still matter."
+  },
+  {
+    "question": "Customer information changed yesterday. Claude continues using cached information from last week. Best improvement?",
+    "options": {
+      "A": "Increase context window.",
+      "B": "Refresh context using a live tool or fresh retrieval before answering.",
+      "C": "Increase max_tokens.",
+      "D": "Use few-shot prompting."
+    },
+    "answer": "B",
+    "justification": "This is stale context. Refresh with a live tool or fresh retrieval before answering."
+  },
+  {
+    "question": "Your CI/CD pipeline should: ● Review every PR ● Run security checks ● Update Jira ● Generate release notes Which architecture best fits?",
+    "options": {
+      "A": "Claude chat only.",
+      "B": "Headless Claude Code + Hooks + Skills + MCP servers.",
+      "C": "RAG only.",
+      "D": "XML prompting."
+    },
+    "answer": "B",
+    "justification": "An unattended CI/CD pipeline maps to Headless Claude Code with Hooks, Skills and MCP servers."
+  },
+  {
+    "question": "A coordinator launches: ● Finance Agent ● Legal Agent ● HR Agent The user also requested a security audit. No Security Agent was launched. Who's responsible?",
+    "options": {
+      "A": "Finance Agent",
+      "B": "Security Agent",
+      "C": "Coordinator",
+      "D": "Claude API"
+    },
+    "answer": "C",
+    "justification": "The coordinator decides which specialists to launch, so the missing security agent is its failure."
+  },
+  {
+    "question": "A coordinator delegates every user request—even simple greetings—to five specialist agents. Primary architectural flaw?",
+    "options": {
+      "A": "Not enough workers.",
+      "B": "Violates Progressive Delegation.",
+      "C": "Context window too small.",
+      "D": "Missing RAG."
+    },
+    "answer": "B",
+    "justification": "Delegating even simple greetings to five agents violates Progressive Delegation."
+  },
+  {
+    "question": "A user asks: \"What is today's AWS bill?\" Your company has: ● Billing API ● Billing documentation Best architecture?",
+    "options": {
+      "A": "RAG",
+      "B": "Tool",
+      "C": "Claude memory",
+      "D": "XML prompting"
+    },
+    "answer": "B",
+    "justification": "Today's bill is live data from the Billing API, so a tool is the correct source."
+  },
+  {
+    "question": "Claude outputs: { \"quantity\": -5 } The JSON structure matches the schema. Business rule: Quantity must be greater than zero. Best solution?",
+    "options": {
+      "A": "Larger schema.",
+      "B": "Post-generation validation.",
+      "C": "Higher temperature.",
+      "D": "RAG."
+    },
+    "answer": "B",
+    "justification": "The JSON matches the schema, so only post-generation business validation can catch a negative quantity."
+  },
+  {
+    "question": "Repository: ● 600,000 files ● 15 years of history Developer requests: \"Explain the logging framework.\" Best architecture?",
+    "options": {
+      "A": "Load the full repository.",
+      "B": "Analyze only relevant files using repository understanding.",
+      "C": "Increase context.",
+      "D": "Use higher temperature."
+    },
+    "answer": "B",
+    "justification": "Analyse only the files related to logging. A 600,000-file repository cannot and should not be loaded."
+  },
+  {
+    "question": "A company wants an AI platform that can: ● Answer employee policy questions ● Retrieve current PTO balances ● Submit vacation requests ● Automatically review pull requests ● Generate release notes nightly Which architecture is BEST?",
+    "options": {
+      "A": "One large prompt with all documentation.",
+      "B": "Claude + RAG only.",
+      "C": "Claude + RAG + Application Tools + MCP + Claude Code (Headless, Hooks, Skills).",
+      "D": "Increase context window to maximum."
+    },
+    "answer": "C",
+    "justification": "The requirements span policy documents, live balances, actions and repository automation, so only the full stack fits."
+  },
+  {
+    "question": "A financial institution is building a Claude-powered assistant with these requirements: ● Current account balances ● Internal compliance manuals ● Loan eligibility rules ● Automatic fraud detection ● Nightly code reviews ● GitHub integration ● Secure deployment pipeline ● Architecture experimentation without disrupting production ● Long-running conversations ● Structured regulatory reports Which combination best satisfies all requirements?",
+    "options": {
+      "A": "Claude + Large Context + High Temperature",
+      "B": "Claude + RAG + Tools + Programmatic Business Rules + MCP + Claude Code + Headless Mode + Hooks + Summary Injection + context:fork",
+      "C": "Claude + XML Prompting only",
+      "D": "Claude + Multi-Agent only"
+    },
+    "answer": "B",
+    "justification": "Only this option covers live data, private documents, business rules, external systems, automation and long conversations."
+  },
+  {
+    "question": "Your company has implemented RAG over 500,000 internal documents. Employees now ask: \"What is my remaining vacation balance?\" What's the BEST architecture?",
+    "options": {
+      "A": "Use RAG because HR documents contain vacation policies.",
+      "B": "Use a live PTO lookup tool; optionally use RAG to explain the policy.",
+      "C": "Increase the retrieval Top-K to 100.",
+      "D": "Store balances in the system prompt."
+    },
+    "answer": "B",
+    "justification": "A vacation balance is live data requiring a PTO tool. RAG can explain the policy but cannot supply the number."
+  },
+  {
+    "question": "Claude always selects search_customer before get_customer_details, even though the customer ID is already known. What's the BEST improvement?",
+    "options": {
+      "A": "Increase temperature.",
+      "B": "Improve the get_customer_details tool description to clearly state when it should be used.",
+      "C": "Increase max_tokens.",
+      "D": "Add more RAG documents."
+    },
+    "answer": "B",
+    "justification": "Tool ordering is driven by descriptions, so state clearly when get_customer_details should be used."
+  },
+  {
+    "question": "Claude correctly calls approve_loan. Unfortunately, the applicant is legally ineligible. Who failed?",
+    "options": {
+      "A": "Claude",
+      "B": "Tool description",
+      "C": "Application/business rule enforcement",
+      "D": "JSON Schema"
+    },
+    "answer": "C",
+    "justification": "Claude called the tool correctly; legal eligibility is a business rule the application must enforce."
+  },
+  {
+    "question": "A user uploads a 2,000-page technical manual. They ask: \"Summarize Chapter 17.\" BEST approach?",
+    "options": {
+      "A": "Send the whole manual.",
+      "B": "Chunk the manual, retrieve Chapter 17, then summarize.",
+      "C": "Increase context window.",
+      "D": "Use higher temperature."
+    },
+    "answer": "B",
+    "justification": "Chunk the manual and retrieve Chapter 17 rather than sending 2,000 pages into context."
+  },
+  {
+    "question": "A Hook automatically starts a Security Skill after every pull request. Where should the trigger live?",
+    "options": {
+      "A": "The Skill",
+      "B": "The Hook",
+      "C": "CLAUDE.md",
+      "D": "mcp.json"
+    },
+    "answer": "B",
+    "justification": "The Hook holds the trigger and fires on the event; the Skill contains the work being performed."
+  },
+  {
+    "question": "Claude receives: ● README ● Architecture Guide ● Database Schema It only needs to explain the authentication module. What's the architectural mistake?",
+    "options": {
+      "A": "Missing XML.",
+      "B": "Too much irrelevant context.",
+      "C": "Missing tool descriptions.",
+      "D": "Missing Hooks."
+    },
+    "answer": "B",
+    "justification": "Sending the README, architecture guide and schema when only auth matters is excess irrelevant context."
+  },
+  {
+    "question": "Your coordinator launches six specialist agents. Three finish. One fails. Two are still running. What should the coordinator do?",
+    "options": {
+      "A": "Fail immediately.",
+      "B": "Wait forever.",
+      "C": "Handle partial completion, retry or continue based on workflow.",
+      "D": "Restart everything."
+    },
+    "answer": "C",
+    "justification": "A coordinator must handle partial completion, retrying or continuing according to the workflow."
+  },
+  {
+    "question": "Claude generates SQL. Sometimes it creates unsafe DELETE statements. Best improvement?",
+    "options": {
+      "A": "Higher temperature.",
+      "B": "Lower temperature + validation + execution safeguards.",
+      "C": "Bigger context.",
+      "D": "Use RAG."
+    },
+    "answer": "B",
+    "justification": "Unsafe SQL needs deterministic safeguards: lower temperature plus validation plus execution guards."
+  },
+  {
+    "question": "A company stores: ● Product documentation ● Current inventory ● Pricing history Customer asks: \"How many units are currently in stock?\" Best answer source?",
+    "options": {
+      "A": "Product documentation",
+      "B": "Inventory Tool",
+      "C": "Claude knowledge",
+      "D": "RAG"
+    },
+    "answer": "B",
+    "justification": "Current stock levels are live data, so the inventory tool is the correct source."
+  },
+  {
+    "question": "An MCP GitHub server exposes: ● Repository files ● Create Issue ● Merge PR Which are Resources?",
+    "options": {
+      "A": "Repository files only",
+      "B": "Merge PR only",
+      "C": "Create Issue + Merge PR",
+      "D": "All of them"
+    },
+    "answer": "A",
+    "justification": "Repository files are read-only data (Resources). Creating an issue and merging a PR are actions (Tools)."
+  },
+  {
+    "question": "Claude Code is reviewing a pull request. Should it analyze unrelated modules?",
+    "options": {
+      "A": "Yes, always.",
+      "B": "No, focus on relevant files and dependencies.",
+      "C": "Load the full repository.",
+      "D": "Use RAG."
+    },
+    "answer": "B",
+    "justification": "Review should be scoped to the changed files and their dependencies, not unrelated modules."
+  },
+  {
+    "question": "Claude outputs: { \"salary\": 5000000000 } The schema allows numbers. Business limit: Salary ≤ 1,000,000. Best solution?",
+    "options": {
+      "A": "Increase max_tokens.",
+      "B": "Post-generation business validation.",
+      "C": "XML prompting.",
+      "D": "Higher temperature."
+    },
+    "answer": "B",
+    "justification": "The schema accepts any number, so only post-generation business validation can enforce the salary cap."
+  },
+  {
+    "question": "An application repeatedly re-sends the entire conversation history even though summaries already exist. Primary issue?",
+    "options": {
+      "A": "Attention dilution.",
+      "B": "Temperature.",
+      "C": "Hooks.",
+      "D": "MCP."
+    },
+    "answer": "A",
+    "justification": "Re-sending the entire history when summaries exist floods the context and dilutes attention."
+  },
+  {
+    "question": "A developer wants to compare two refactoring approaches before choosing one. Best feature?",
+    "options": {
+      "A": "Scratchpad",
+      "B": "context:fork",
+      "C": "fork_session",
+      "D": "Headless Mode"
+    },
+    "answer": "B",
+    "justification": "context:fork lets the developer compare two approaches inside the same session."
+  },
+  {
+    "question": "Which statement is MOST correct?",
+    "options": {
+      "A": "MCP replaces REST APIs.",
+      "B": "MCP standardizes how AI interacts with external capabilities.",
+      "C": "MCP stores conversation history.",
+      "D": "MCP replaces RAG."
+    },
+    "answer": "B",
+    "justification": "MCP standardizes how AI interacts with external capabilities; it replaces neither REST APIs nor RAG."
+  },
+  {
+    "question": "Your application always forces invoice_extractor, even when users upload receipts. Problem?",
+    "options": {
+      "A": "Temperature.",
+      "B": "Wrong tool selection strategy.",
+      "C": "Missing XML.",
+      "D": "Missing Hooks."
+    },
+    "answer": "B",
+    "justification": "Forcing a specific tool regardless of input is the wrong tool_choice strategy; auto should select it."
+  },
+  {
+    "question": "A CI/CD pipeline requires: ● Automatic code review ● Automatic testing ● Automatic release notes No developer interaction. BEST architecture?",
+    "options": {
+      "A": "Interactive Claude chat.",
+      "B": "Claude Code Headless + Hooks + Skills.",
+      "C": "RAG.",
+      "D": "Streaming."
+    },
+    "answer": "B",
+    "justification": "Fully unattended CI/CD maps to Claude Code Headless with Hooks and Skills."
+  },
+  {
+    "question": "Your enterprise wants ONE platform that supports: ● Live customer data ● Internal documentation ● Repository analysis ● CI/CD ● GitHub ● Jira ● Large migrations ● Long conversations ● Security review ● Experimentation What's the BEST architecture?",
+    "options": {
+      "A": "Claude + Large Context",
+      "B": "Claude + RAG + Tools + MCP + Claude Code + Plan Mode + Skills + Hooks + Headless Mode + Summary Injection + context:fork",
+      "C": "Claude + XML",
+      "D": "Claude + Higher Temperature"
+    },
+    "answer": "B",
+    "justification": "Only this option covers live data, documents, repository work, automation, long conversations and experimentation."
+  },
+  {
+    "question": "A medical assistant has these tools: ● lookup_patient ● schedule_appointment ● prescribe_medication Business rule: Only licensed doctors may prescribe medication. Claude occasionally calls prescribe_medication after identifying a patient. What is the BEST solution?",
+    "options": {
+      "A": "Add \"Only prescribe if doctor\" to the prompt.",
+      "B": "Improve the tool description.",
+      "C": "Programmatically verify authorization before allowing prescribe_medication.",
+      "D": "Increase temperature."
+    },
+    "answer": "C",
+    "justification": "Prescribing authorization is a business rule and must be verified programmatically, not requested in a prompt."
+  },
+  {
+    "question": "A user asks: \"Am I eligible for free shipping today?\" Information available: ● Shipping policy (internal documentation) ● Current customer membership status (database) ● Current promotion (live API) Best architecture?",
+    "options": {
+      "A": "RAG only",
+      "B": "Tool only",
+      "C": "RAG for policy + tools for membership and promotions",
+      "D": "Claude memory"
+    },
+    "answer": "C",
+    "justification": "The policy is a document (RAG) while membership and promotions are live data (tools), so both are needed."
+  },
+  {
+    "question": "Tools: ● lookup_order ● lookup_payment ● issue_refund Claude sometimes skips lookup_payment. Best fix?",
+    "options": {
+      "A": "Better prompt",
+      "B": "Better tool descriptions",
+      "C": "Application orchestrates required tool sequence",
+      "D": "Higher temperature"
+    },
+    "answer": "C",
+    "justification": "A mandatory tool sequence must be orchestrated by the application rather than requested of Claude."
+  },
+  {
+    "question": "A legal research task requires: ● Tax law ● Employment law ● Contract law ● Final summary Best architecture?",
+    "options": {
+      "A": "One giant prompt",
+      "B": "Coordinator + specialized legal agents + synthesizer",
+      "C": "Larger context",
+      "D": "XML"
+    },
+    "answer": "B",
+    "justification": "Three distinct legal domains plus a final summary maps to a coordinator, specialists and a synthesizer."
+  },
+  {
+    "question": "A chatbot retrieves the top 100 documents for every query. Performance drops. Best improvement?",
+    "options": {
+      "A": "Retrieve fewer, more relevant documents",
+      "B": "Increase context window",
+      "C": "Increase max_tokens",
+      "D": "Increase temperature"
+    },
+    "answer": "A",
+    "justification": "Retrieving 100 documents per query is attention dilution; retrieve fewer, more relevant ones."
+  },
+  {
+    "question": "A user asks: \"What's 25 × 16?\" Architecture launches: ● Planner ● Math agent ● Reviewer ● Formatter ● Validator What's wrong?",
+    "options": {
+      "A": "Too many workers for a trivial task",
+      "B": "Context window too small",
+      "C": "Missing MCP",
+      "D": "Missing RAG"
+    },
+    "answer": "A",
+    "justification": "A single arithmetic question does not justify five agents. This violates Progressive Delegation."
+  },
+  {
+    "question": "Company requirement: Every merge should automatically run the Security Review Skill. Which component triggers the process?",
+    "options": {
+      "A": "Skill",
+      "B": "Hook",
+      "C": "CLAUDE.md",
+      "D": "mcp.json"
+    },
+    "answer": "B",
+    "justification": "The Hook is the component that fires on the merge event and triggers the Skill."
+  },
+  {
+    "question": "A pipeline runs every night without users. Need: ● Review PRs ● Generate changelog ● Update Jira Best feature?",
+    "options": {
+      "A": "Interactive mode",
+      "B": "Headless Mode",
+      "C": "Scratchpads",
+      "D": "Streaming"
+    },
+    "answer": "B",
+    "justification": "An unattended nightly pipeline maps to Headless Mode."
+  },
+  {
+    "question": "Claude needs to: ● Read GitHub Issues ● Create GitHub Issue ● Close GitHub Issue Which are Tools?",
+    "options": {
+      "A": "Read Issues only",
+      "B": "Create and Close Issue",
+      "C": "All three",
+      "D": "None"
+    },
+    "answer": "B",
+    "justification": "Creating and closing issues are actions (Tools). Reading issues is read-only data (a Resource)."
+  },
+  {
+    "question": "Which belongs in CLAUDE.md?",
+    "options": {
+      "A": "GitHub OAuth token",
+      "B": "MCP server configuration",
+      "C": "Team coding conventions and project instructions",
+      "D": "Database schema"
+    },
+    "answer": "C",
+    "justification": "CLAUDE.md holds team conventions and project instructions. Secrets and server configuration belong elsewhere."
+  },
+  {
+    "question": "Conversation length: 850 turns. Important facts: Customer name Subscription plan Open ticket Best approach?",
+    "options": {
+      "A": "Remove all history",
+      "B": "Summarize while preserving essential facts",
+      "C": "Increase temperature",
+      "D": "Add another model"
+    },
+    "answer": "B",
+    "justification": "Summarize the long history while preserving the essential facts such as customer, plan and open ticket."
+  },
+  {
+    "question": "Claude outputs: { \"discount\": 140 } Business rule: Discount ≤100%. Schema accepts numbers. Correct solution?",
+    "options": {
+      "A": "Bigger schema",
+      "B": "Post-generation validation",
+      "C": "Prompt only",
+      "D": "Temperature"
+    },
+    "answer": "B",
+    "justification": "The schema accepts the number, so a discount cap above 100% requires post-generation business validation."
+  },
+  {
+    "question": "Repository: ● 900,000 files Request: Explain authentication. Best strategy?",
+    "options": {
+      "A": "Read entire repository",
+      "B": "Analyze authentication-related files only",
+      "C": "Increase tokens",
+      "D": "Higher temperature"
+    },
+    "answer": "B",
+    "justification": "Analyse only the authentication-related files. A 900,000-file repository cannot be read in full."
+  },
+  {
+    "question": "Claude calls: lookup_order Tool returns: Order already shipped. User asked: Cancel order. Next step?",
+    "options": {
+      "A": "Call cancel_order anyway",
+      "B": "Inspect tool result and explain why cancellation isn't allowed",
+      "C": "Ignore tool result",
+      "D": "Retry tool"
+    },
+    "answer": "B",
+    "justification": "Claude must inspect the tool result and explain why cancellation is not permitted rather than calling the tool anyway."
+  },
+  {
+    "question": "Large refactor: ● 18 microservices ● Shared authentication ● Thousands of tests First action?",
+    "options": {
+      "A": "Edit immediately",
+      "B": "Repository analysis and migration plan",
+      "C": "Increase context",
+      "D": "RAG"
+    },
+    "answer": "B",
+    "justification": "A refactor across 18 microservices starts with repository analysis and a migration plan."
+  },
+  {
+    "question": "Need to compare three API designs before selecting one. Best feature?",
+    "options": {
+      "A": "Scratchpad",
+      "B": "context:fork",
+      "C": "fork_session",
+      "D": "Headless"
+    },
+    "answer": "B",
+    "justification": "context:fork supports comparing alternatives within the current session."
+  },
+  {
+    "question": "Need a long-running experimental redesign lasting several weeks. Best feature?",
+    "options": {
+      "A": "Summary Injection",
+      "B": "context:fork",
+      "C": "fork_session",
+      "D": "Tool"
+    },
+    "answer": "C",
+    "justification": "A weeks-long independent experimental branch maps to fork_session, not an in-session fork."
+  },
+  {
+    "question": "Pipeline: Push ↓ Review ↓ Security ↓ Tests ↓ Deploy Best architecture?",
+    "options": {
+      "A": "Claude Chat",
+      "B": "Claude Code + Headless + Hooks + Skills + MCP",
+      "C": "XML Prompting",
+      "D": "RAG"
+    },
+    "answer": "B",
+    "justification": "An automated push-to-deploy pipeline maps to Claude Code with Headless Mode, Hooks, Skills and MCP."
+  },
+  {
+    "question": "Coordinator launches: ● Finance ● Legal ● HR User requested: Security review. Who failed?",
+    "options": {
+      "A": "HR",
+      "B": "Finance",
+      "C": "Coordinator",
+      "D": "Claude"
+    },
+    "answer": "C",
+    "justification": "The coordinator chooses which workers to dispatch, so the missing security review is its failure."
+  },
+  {
+    "question": "A customer asks: \"How many products are currently in stock?\" The company has an Inventory API and product documentation. Where should the answer come from?",
+    "options": {
+      "A": "RAG",
+      "B": "Tool",
+      "C": "Claude",
+      "D": "Prompt"
+    },
+    "answer": "B",
+    "justification": "Stock counts change constantly, so the Inventory API tool is the correct source rather than documentation."
+  },
+  {
+    "question": "Which is an MCP Resource?",
+    "options": {
+      "A": "Restart deployment",
+      "B": "README.md",
+      "C": "Merge PR",
+      "D": "Delete branch"
+    },
+    "answer": "B",
+    "justification": "README.md is read-only content, which is an MCP Resource. The other options are actions."
+  },
+  {
+    "question": "Scratchpads are primarily used for:",
+    "options": {
+      "A": "User-visible notes",
+      "B": "Temporary internal reasoning and planning",
+      "C": "Long-term memory",
+      "D": "RAG storage"
+    },
+    "answer": "B",
+    "justification": "Scratchpads hold temporary internal reasoning and planning, not user-facing output or long-term memory."
+  },
+  {
+    "question": "Claude keeps using yesterday's stock price. Best fix?",
+    "options": {
+      "A": "Bigger prompt",
+      "B": "Refresh with live tool",
+      "C": "XML",
+      "D": "Temperature"
+    },
+    "answer": "B",
+    "justification": "A stock price from yesterday is stale context; refresh it with a live tool call."
+  },
+  {
+    "question": "What is the primary purpose of a JSON Schema?",
+    "options": {
+      "A": "Business validation",
+      "B": "Output structure",
+      "C": "Security",
+      "D": "Tool orchestration"
+    },
+    "answer": "B",
+    "justification": "JSON Schema constrains the structure of the output. Business correctness is a separate validation concern."
+  },
+  {
+    "question": "When should specialist agents be created?",
+    "options": {
+      "A": "Every request",
+      "B": "Only when task complexity justifies delegation",
+      "C": "Never",
+      "D": "Only for coding"
+    },
+    "answer": "B",
+    "justification": "Specialist agents should be created only when task complexity justifies the coordination overhead."
+  },
+  {
+    "question": "What is the biggest advantage of Skills?",
+    "options": {
+      "A": "More tokens",
+      "B": "Reusable expertise and standardized workflows",
+      "C": "Faster inference",
+      "D": "Larger context"
+    },
+    "answer": "B",
+    "justification": "Skills package reusable expertise into standardized workflows the whole team can invoke."
+  },
+  {
+    "question": "What is the primary purpose of a Hook?",
+    "options": {
+      "A": "Store memory",
+      "B": "Trigger automated actions on events",
+      "C": "Replace MCP",
+      "D": "Increase context"
+    },
+    "answer": "B",
+    "justification": "Hooks trigger automated actions in response to lifecycle events."
+  },
+  {
+    "question": "Which statement is MOST correct?",
+    "options": {
+      "A": "Claude should enforce banking policies.",
+      "B": "Claude should retrieve information, while applications enforce business rules.",
+      "C": "RAG should execute transfers.",
+      "D": "MCP replaces application logic."
+    },
+    "answer": "B",
+    "justification": "Claude retrieves and communicates information; the application enforces banking rules."
+  },
+  {
+    "question": "An enterprise AI platform requires: ● Live customer information ● Internal documentation ● Structured JSON reports ● Repository understanding ● Large-scale code migrations ● GitHub integration ● Jira integration ● Nightly automation ● Security reviews ● Long conversations ● Experimentation with multiple solutions ● Regulatory compliance Which architecture is the BEST fit?",
+    "options": {
+      "A": "Claude + Large Prompt",
+      "B": "Claude + RAG + Tools + JSON Schema + Validation + MCP + Claude Code + Plan Mode + Skills + Hooks + Headless Mode + Summary Injection + context:fork + Programmatic Business Rule Enforcement",
+      "C": "Claude + XML Prompting",
+      "D": "Claude + Multi-Agent only"
+    },
+    "answer": "B",
+    "justification": "Only this option covers every listed requirement across data access, structure, repository work, automation and compliance."
+  },
+  {
+    "question": "Your application requires Claude to generate text only until ###END###, then stop automatically. Which feature should you use?",
+    "options": {
+      "A": "max_tokens",
+      "B": "stop_sequences",
+      "C": "temperature",
+      "D": "tool_choice"
+    },
+    "answer": "B",
+    "justification": "stop_sequences is a request parameter that halts generation when a supplied terminator is produced. stop_reason is the response field reporting why generation stopped."
+  },
+  {
+    "question": "An engineer is trying to understand how caching works before adding a new cache invalidation trigger. After initial grep searches, the agent has identified that the caching logic spans 15 files including decorators, middleware, and service classes (~8,000 lines total). What's the most effective next step for quickly understanding the caching constraints?",
+    "options": {
+      "A": "Use Git to find the matching commit creating the caching systems (cache.py, cache_mgr), prioritize the largest files by reading them first, then check smaller files for gaps.",
+      "B": "Analyze imports and class hierarchies to identify the base cache class. Read that file to understand the interface, then trace specific invalidation implementations.",
+      "C": "Use grep to search for \"invalidate\" and \"helper\" patterns across all files. Read only those specific line ranges with minimal surrounding context.",
+      "D": "Use cat (or a similar approach) to read all 15 files sequentially, building a complete understanding across the full caching implementation."
+    },
+    "answer": "B",
+    "justification": "Understanding an unfamiliar subsystem starts with architecture and interfaces. Identifying the base cache class reveals the design before tracing concrete implementations."
+  },
+  {
+    "question": "You built an LLM-powered code review tool that analyzes pull requests and outputs structured findings. Each finding is a JSON object with: ● file_path ● line_number ● issue_category (e.g., \"security\", \"style\") ● description Developers can click \"dismiss\" on any finding they consider unhelpful. The team wants to analyze the dismissals to understand what the model is getting wrong and improve prompts accordingly. What change to your output structure would best support this analysis?",
+    "options": {
+      "A": "Expand the description field to include more detailed explanations of why each issue matters and how to fix it.",
+      "B": "Add file_contents (or similar) that records the relevant code context (e.g., the single for loop variable) that triggered each finding.",
+      "C": "Remove the issue_category field and track dismiss rates only at the individual finding level.",
+      "D": "Add a model_confidence field (0–1) and filter out findings below a threshold calibrated against historical dismissal rates."
+    },
+    "answer": "B",
+    "justification": "Recording the code context that triggered each finding is what makes dismissals diagnosable; without it you cannot tell why the model was wrong."
+  },
+  {
+    "question": "The assistant consistently flags patterns your team uses intentionally—for example: ● force-unwrapping optionals in test files, ● long coordinator classes that follow your established architecture, ● importing internally maintained modules that are marked as deprecated in the public SDK. Developers are dismissing many of these findings because they are project-specific conventions. Which approach would best reduce these false positives by supplying the project's conventions as persistent context on every review?",
+    "options": {
+      "A": "Compress the review so it analyzes only the changed lines in the diff, reducing the amount of code the model evaluates per review.",
+      "B": "Document the team's accepted patterns and architectural conventions in the project's CLAUDE.md file so the model receives this context during every review.",
+      "C": "Have developers label these recurring conventions manually and preprocess diffs to exclude suppressed files before sending code to the model.",
+      "D": "Add post-processing rules that suppress findings containing terms like \"force unwrap\", \"long class\", or \"deprecated import\" before results reach developers."
+    },
+    "answer": "B",
+    "justification": "CLAUDE.md supplies project conventions as persistent context on every review, which is exactly what the question asks for."
+  },
+  {
+    "question": "During trial testing of the automated review pipeline, you notice that reviews on large PRs (50+ changed files) sometimes take over 20 minutes and cost about $2 per run due to extensive agentic loops—Claude reads files, runs analysis tools, and iterates many times. Your team needs each invocation to abort once it reaches a fixed token and fixed dollar budget, enforced by Claude Code itself rather than the surrounding job runner. Which configuration change directly enforces both of those per-invocation limits?",
+    "options": {
+      "A": "Set max-turns (or equivalent) on the Claude Action/job and monitor per-run costs using the Anthropic Console usage dashboard.",
+      "B": "Add --max-cost and --max-budget (or the equivalent Claude Code invocation options) to cap token iterations and spending for each invocation.",
+      "C": "Switch to a smaller model so each iteration uses fewer tokens and has a lower per-call cost.",
+      "D": "Set a restrictive allowlist that automatically denies any tool permission request not in the explicitly allowed set."
+    },
+    "answer": "B",
+    "justification": "Per-invocation token and cost caps must be enforced by Claude Code itself, which is what the invocation-level budget options do."
+  },
+  {
+    "question": "Your code review prompt includes both implementation changes and the corresponding test file, but the LLM's review comments fail to point out untested code paths. Analysis reveals that the model correctly flags functions with no tests at all, but fails to identify when conditional branches or error-handling paths lack coverage. What's the most effective way to improve detection of branch-level test coverage gaps without overcomplicating the pipeline?",
+    "options": {
+      "A": "Instruct the prompt to retrieve implementation and tests, presenting each function followed immediately by its test cases.",
+      "B": "Implement a multi-pass pipeline where output from the LLM's first check on conditional branches is cross-referenced against test assertions in a second pass.",
+      "C": "Add explicit instructions directing the model to enumerate each conditional branch and exception path, then verify whether each has a corresponding test assertion.",
+      "D": "Include a few-shot example showing code with an uncovered branch paired with the review comment identifying the specific missing test case."
+    },
+    "answer": "C",
+    "justification": "The model needs an explicit instruction to enumerate every conditional branch and exception path and check each for a corresponding test assertion."
+  },
+  {
+    "question": "Your automated review analyzes security issues, API design, and business logic correctness. Validation shows strong recall for API design findings (82%) but poor recall for business logic edge cases in quiz scoring (34%). When you add few-shot examples of logic bugs to the prompt, logic recall improves, but API recall drops. How should you address this trade-off to improve detection across both categories?",
+    "options": {
+      "A": "Increase the prompt size with even more examples from both categories, accepting the recall trade-off.",
+      "B": "Replace the few-shot examples with detailed step-by-step instructions to verify calculations, division-by-zero cases, score calculations, and grading thresholds.",
+      "C": "Split the review into separate focused prompts—one to verify API design and another for business logic—each with dedicated examples, then combine the findings before posting.",
+      "D": "Provide the full repository context instead of just the changed files and surrounding code, giving the model deeper visibility into business logic patterns."
+    },
+    "answer": "C",
+    "justification": "Splitting into separate focused prompts removes the competition between example sets, then findings are combined before posting."
+  },
+  {
+    "question": "Your review system sends the git diff and a list of changed files to Claude. Reviews are posted asynchronously and don't block PR creation. Developers report that reviews consistently miss bugs involving cross-file dependencies because unchanged files referenced by the review aren't included. Evaluation shows these cross-file bugs account for a significant portion of production incidents. What is the most effective change to improve detection of cross-file bugs?",
+    "options": {
+      "A": "Keep the review focused on only the changed files, then expand the prompt to include a list of files with dependency graphs for all changed files.",
+      "B": "Adopt the review as a multi-agent system: let one model read changed files and search the codebase using tools, following references to verify cross-file findings.",
+      "C": "Separate review passes by file type (UI, backend, database), then aggregate and deduplicate findings using a final summarization call.",
+      "D": "Add a list of project instructions telling the model to infer references in the diff, then reason step-by-step about how each change might affect callers in other files."
+    },
+    "answer": "B",
+    "justification": "Giving the model tools to search the codebase and follow references lets it pull in the unchanged files that the diff depends on."
+  },
+  {
+    "question": "Your application currently receives code reviews in approximately 50% of cases using the synchronous API. Reviews are non-blocking—developers merge after tests pass and address findings in follow-up commits. You're evaluating the Message Batches API for this workflow. Which factor most determines whether batch processing is appropriate for this use case?",
+    "options": {
+      "A": "Whether developers receive review results within about 24 hours, rather than requiring an immediate response in the workflow.",
+      "B": "Whether one architecture review can fit into a single request without parallel refinement.",
+      "C": "Whether review feedback arrives before pull request creation rather than after.",
+      "D": "Whether your model prompt can return reviews containing a different order than submitted."
+    },
+    "answer": "A",
+    "justification": "Batch processing is appropriate only if the workflow tolerates results arriving within roughly 24 hours rather than immediately."
+  },
+  {
+    "question": "Your pipeline reviews approximately 300 database migration scripts daily using the Message Batches API. Each batch request includes: ● a shared 8,000-token system prompt (migration review guidelines + schema documentation), ● followed by the individual migration script. You've added prompt caching for the shared system prompt on every request, but monitoring shows cache hit rates of only 32%, with cache misses concentrated on requests processed later in the batch window. Which change will address the root cause of these cache misses without adding sequential processing latency?",
+    "options": {
+      "A": "Adjust batching so each batch processes only 25 requests, submitting the next batch only after the previous one finishes, keeping requests close enough together for cache reuse.",
+      "B": "Move the cache control breakpoint from the system prompt to the individual migration script content so similar code patterns across reviews can be cached.",
+      "C": "Use the extended (1-hour) cache TTL instead of the default 5-minute TTL for your cache breakpoints.",
+      "D": "Add pre-warming requests with small \"heartbeat\" prompts at the beginning of each batch to seed the cache before the review requests execute."
+    },
+    "answer": "C",
+    "justification": "Cache misses late in the batch window point to TTL expiry, so the extended one-hour cache TTL addresses the root cause without serializing work."
+  },
+  {
+    "question": "Your extraction model has been tuned for months. Analysis shows that extractions with model confidence above 99% have 97% accuracy overall. To reduce reviewer workload, you plan to automatically accept these high-confidence extractions. Before deploying, what validation step is most critical?",
+    "options": {
+      "A": "Audit whether processing time for high-confidence extractions directly decreases downstream system error rates.",
+      "B": "Audit whether reviewer intervention is still disproportionately correcting the same fields within the accepted data.",
+      "C": "Increase the confidence threshold further (99.5%, 99.9%, etc.) to maximize automation while minimizing errors.",
+      "D": "Measure accuracy by document type and field to verify that high-confidence error rates remain consistently low across all segments, not just in aggregate."
+    },
+    "answer": "D",
+    "justification": "Aggregate accuracy can hide concentrated failure in specific document types or fields, so accuracy must be measured per segment before automating."
+  },
+  {
+    "question": "Your pipeline uses a tool-calling approach with a JSON schema for paper details. You've also defined search_papers and deploy_app tools for enrichment. During testing, you notice that when users include requests like \"extract the metadata and tell me how cited it is,\" Claude sometimes calls search_papers first, which fails because it needs the DOI that extract_metadata would provide. What's the most effective way to ensure structured metadata extraction happens first?",
+    "options": {
+      "A": "Set tool_choice to {\"type\": \"tool\", \"name\": \"extract_metadata\"} for every API call in the pipeline, ensuring Claude always extracts metadata before any enrichment can occur.",
+      "B": "Set tool_choice to {\"type\": \"auto\"} but use system instructions prioritizing extract_metadata.",
+      "C": "Set tool_choice to {\"type\": \"tool\", \"name\": \"extract_metadata\"} and process the enrichment requests in subsequent turns after receiving the extracted metadata.",
+      "D": "Set tool_choice to {\"type\": \"auto\"} and reorder the tool definitions so extract_metadata appears first in the tools array, since Claude prioritizes earlier listed tools."
+    },
+    "answer": "C",
+    "justification": "Force extract_metadata first, then handle enrichment in subsequent turns once the DOI it produces is available."
+  },
+  {
+    "question": "You need to build a pipeline to parse restaurant menus and must output structured JSON with fields for item names, descriptions, prices, and dietary tags. Some menus use inconsistent formatting—prices as \"$12\" vs \"12.00\", dietary info as icons vs text. What's the most reliable approach?",
+    "options": {
+      "A": "Define a strict output schema and include format normalization rules in your prompt.",
+      "B": "Use separate LLM calls for each field to ensure customized handling of each type.",
+      "C": "Generate multiple extraction attempts per document and select the most common format.",
+      "D": "Extract raw text and write custom regex/parsing code after Claude returns."
+    },
+    "answer": "A",
+    "justification": "A strict output schema plus explicit normalization rules in the prompt handles format variance in a single call."
+  },
+  {
+    "question": "The system routes documents with standard confidence below 85% to human review. A quarterly audit reveals that 12% of high-confidence extractions (>85%) also contain errors—cases where the model finds plausible-but-incorrect values. Error sources vary: comparison tables showing competitor prices, updates referencing different product variants, and testing data bypassing the model field constraints. You need a sustainable strategy to catch these high-confidence errors and measure whether improvements reduce the error rate over time. What approach is most effective?",
+    "options": {
+      "A": "Lower the confidence threshold from 85% to 70%, routing a larger volume of extractions to human review.",
+      "B": "Implement mechanical rules that flag elements containing comparison tables or appendixes for review regardless of confidence score.",
+      "C": "Implement stratified random sampling reviewing a fixed percentage of high-confidence extractions weekly, enabling error rate measurement and novel pattern detection.",
+      "D": "Add user feedback loops that flag errors for high-confidence documents. Flagged cases where the two extraction attempts produce different results."
+    },
+    "answer": "C",
+    "justification": "Stratified random sampling of high-confidence extractions both measures the error rate over time and surfaces novel failure patterns."
+  },
+  {
+    "question": "After your first daily batch run of 500,000 documents, 500 documents (0.1%) failed with \"context_length_exceeded\" errors. The production tier identifies each failure by content_id. What's the most cost-effective approach to process these failures?",
+    "options": {
+      "A": "Subdivide only the 500 failed documents after breaking them into smaller pieces, then combine the partial extractions.",
+      "B": "Re-run the exact same parameters for the 500 failed documents and re-submit them in a new batch.",
+      "C": "Re-process the entire batch with prompt caching enabled to reduce the cost of re-running requests with identical system prompts.",
+      "D": "Re-run the entire 500,000 documents using a model that has a larger context window."
+    },
+    "answer": "A",
+    "justification": "Only the 500 oversized documents need to be chunked and recombined. Reprocessing all 500,000 wastes tokens and does not fix the cause."
+  },
+  {
+    "question": "You use the model to extract patterns from product descriptions, details, sizing, materials info into JSON. Despite having a well-defined schema, the model inconsistently extracts the \"materials\" field—sometimes returning \"cotton blend\", other times \"Cotton/Polyester blend\", and sometimes hitting the hidden content elements present in the source. What's the most effective way to improve extraction consistency?",
+    "options": {
+      "A": "Define a strict schema and include enum definitions inside your JSON schema to take advantage of standard tool/model capabilities.",
+      "B": "Add detailed few-shot examples and lower model temperature values.",
+      "C": "Add a schema validator downstream to re-prompt and retry with precise errors every time dynamic content fails to parse.",
+      "D": "Decrease the format temperature settings in the response to force the model to always select a value."
+    },
+    "answer": "A",
+    "justification": "Inconsistent categorical values are fixed by constraining them with enum definitions in the JSON schema."
+  },
+  {
+    "question": "Testing reveals that when a document is missing specialized specifications, the model fabricates plausible-sounding values to satisfy your schema's required fields. For example, a document mentioning only dimensions receives a fabricated \"weight: 2.3 kg\" in the extraction output. What schema design change will most effectively address this hallucination behavior?",
+    "options": {
+      "A": "Add a \"confidence\" field alongside each specification where the model will report its certainty, then filter out low-confidence extractions.",
+      "B": "Make optional elements optional in the prompt stating \"only extract information explicitly stated in the document, use placeholder text for missing values\".",
+      "C": "Implement semantic validation that verifies each extracted specification appears or can be inferred from the source document text.",
+      "D": "Change fields that may be missing in source documents from required to optional, allowing the model to omit them."
+    },
+    "answer": "D",
+    "justification": "Required fields force the model to invent values. Making genuinely optional fields optional lets it omit what is absent."
+  },
+  {
+    "question": "After implementing standard schema validation rules, 2.5% of extractions still have valid JSON with empty arrays or null values for required fields like citations and methodology. Spot-checking reveals that source documents contain this information, but in varied formats—citations in tables vs text footnotes, methodology sections vs details embedded in introductions. What's the most effective way to address these failures?",
+    "options": {
+      "A": "Add few-shot examples demonstrating extractions from documents with varied structures—showing how to identify citations in different formats and locate methodology details across section types.",
+      "B": "Build a regex-based processing layer that scans source documents for citations patterns and methodology keywords, populating empty fields when the model fails to extract.",
+      "C": "Modify the JSON Schema to make citations and methodology optional and flag empty-value records for manual review rather than failing schema validation.",
+      "D": "Implement dynamic prompt loops that re-prompt when the model returns empty arrays or text."
+    },
+    "answer": "A",
+    "justification": "The information exists but appears in varied structures, so few-shot examples showing those structures are the effective fix."
+  },
+  {
+    "question": "You notice that extraction errors increase as text fragments include amendments. When a contract contains both original terms and later amendments (e.g., original clause specifies \"30 day payment terms\" while Amendment 1 changes this to \"45 days\"), the model inconsistently extracts one value or the other, often contradicting itself on which values dominate. What's the most effective approach to handle extraction accuracy for documents with amendments?",
+    "options": {
+      "A": "Use prompt instructions to enforce the exact word-for-word values and ignore superseded definitions.",
+      "B": "Redesign the schema to embedded tuples capturing values paired with author source location and effective date.",
+      "C": "Implement post-extraction validation using pattern matching to detect amendments and flag those extractions for manual review.",
+      "D": "Pre-process execution with a tool that identifies and removes superseded sections before the main extraction step."
+    },
+    "answer": "B",
+    "justification": "Capturing each value with its source location and effective date lets the pipeline resolve which term supersedes which."
+  },
+  {
+    "question": "Your validation pipeline flagging the last 3 weeks of test data shows an error rate around 4.5%. Analysis shows a recurring pattern: when recipes include informal measurements like \"a handful\" or \"a splash,\" the model either invents specific amounts or leaves fields empty—accounting for 23% of all errors. How should you use this feedback to improve extraction consistency and accuracy?",
+    "options": {
+      "A": "Update the JSON schema to add a \"measurement_type\" field (e.g., structured vs informal).",
+      "B": "Implement a post-processing system that uses pattern matching to detect informal measurement phrases in source text and manually populate values when the extraction is empty.",
+      "C": "Flag all issues by manually reviewing all text patterns and updating the database fields.",
+      "D": "Add few-shot examples to your prompt demonstrating correct handling of informal measurements—extracting the exact verbatim rather than converting or omitting them."
+    },
+    "answer": "D",
+    "justification": "Few-shot examples showing verbatim extraction of informal measurements stop the model from inventing or omitting values."
+  },
+  {
+    "question": "Your extraction pipeline implements automatic retries when a verification fails. On each retry, the underlying validation error is appended to the prompt. This retry-with-error-feedback approach resolves most failures within 2-3 attempts. For which failure pattern would additional retries be LEAST effective?",
+    "options": {
+      "A": "The model outputs a broken block of pseudo-formatted string or \"JSON\" when the schema requires integer values.",
+      "B": "The model extraction fails entirely when the file size accidentally exceeds the model context limit due to the system layout.",
+      "C": "The model includes full timestamp identifiers (e.g. \"2023-01-15T00:00:00Z\") when the schema requires only the date portion (YYYY-MM-DD).",
+      "D": "The model returns a nested object organized by category when the schema requires a flat array of strings."
+    },
+    "answer": "B",
+    "justification": "Retry-with-error-feedback cannot help when the input exceeds the context limit, because the error is not something the model can correct."
+  },
+  {
+    "question": "An analysis of user data profiles reveals three primary consistency issues: (1) compound skills like \"Python and SQL\" are sometimes kept as one entry, sometimes split; (2) implied but unstated skills occasionally appear in extractions; (3) similar documents produce wildly differing lists of capabilities across extraction attempts. What is the most effective approach to resolve these?",
+    "options": {
+      "A": "Add system instructions demanding model output match explicit fields exactly, without optimization, splits, or additions.",
+      "B": "Transition the extraction schema from generic strings to categorical fields with enums or reference datasets where possible.",
+      "C": "Include few-shot examples that model standard schema handling and dynamic prompt routing workflows.",
+      "D": "Lower the temperature parameter (e.g. from 1.0 down to 0.1) to stabilize model vocabulary and generation across extraction attempts."
+    },
+    "answer": "B",
+    "justification": "Categorical fields backed by enums or reference datasets remove the ambiguity that instructions and temperature cannot reliably fix."
+  },
+  {
+    "question": "When the agent logic feeds tool results back to Claude showing the item was purchased 45 days ago, how does the agent loop determine whether to call process_refund or escalate_to_human next?",
+    "options": {
+      "A": "The new text tokens are added to the conversation context and the model reasons about which action to take.",
+      "B": "The authorization system overrides decisions based on the order status fields.",
+      "C": "The agent maps the processing steps to a hardcoded flowchart defined at the start of the request.",
+      "D": "The orchestration layer configures custom machine learning policy attributes to specific tool calls."
+    },
+    "answer": "A",
+    "justification": "Tool results are appended to the conversation context as new input, and the model reasons over them to choose the next action."
+  },
+  {
+    "question": "A customer resolution pipeline uses a multi-turn approach, mapping the request to multiple sequential tool calls: look_up_user_account, retrieve_order_details to find the purchase details, and then either process_refund or escalate_to_human depending on warranty eligibility. You're leveraging the standard tool choice defaults throughout the Claude API. What is the primary mechanism your application uses to determine whether to continue the loop or stop?",
+    "options": {
+      "A": "You examine the \"stop_reason\" parameter returned by Claude—when the expected text or tool response fails to stop requesting tools.",
+      "B": "You check the subset of output messages items returned—if a tool is present, the agent logic executes it and the loop should run.",
+      "C": "You trace down individual steps inside each response using predefined thresholds or human indicators.",
+      "D": "You check the \"stop_reason\" field inside the API response—the loop continues while it reports \"tool_use\" and halts when it changes to \"end_turn\" or another terminal status."
+    },
+    "answer": "D",
+    "justification": "The loop is driven by the stop_reason field: continue while it reports tool_use, stop when it reports end_turn or another terminal value."
+  },
+  {
+    "question": "Compliance regulations dictate that refunds exceeding $500 must strictly escalate to a human agent—this rule cannot be left to model discretion. Despite clear system prompt instructions, production logs show the agent occasionally processes high-value refunds directly (3% failure rate). How should you enforce guaranteed compliance?",
+    "options": {
+      "A": "Add a downstream evaluation loop with text matching to \"human policy failed\" whenever the content is recovered.",
+      "B": "Strengthen the system prompt with emphatic language \"CRITICAL POLICY: Refunds over $500 MUST trigger human escalation! NEVER process these directly.\"",
+      "C": "Implement logic in standard code validation layer where when the refund process amount exceeds $500, block it and invoke human escalation.",
+      "D": "Add few-shot examples to the prompt showing correct escalation scenarios of various refund amounts ($100, $500, $600)."
+    },
+    "answer": "C",
+    "justification": "A hard compliance threshold cannot be left to model discretion. Enforce it in code by blocking the refund and invoking escalation."
+  },
+  {
+    "question": "During a refund pipeline turn, the agent uses valid tools to locate customer user data via get_user_account and retrieve order details via retrieve_order_details. But when attempting to call process_refund, the tool returns a timeout error. The agent has enough information to explain the charges and verify refund eligibility, but cannot actually process the refund due to the backend failure. What approach best handles this contact validation mismatch with appropriate error handling?",
+    "options": {
+      "A": "Explain the processing status and eligibility, acknowledge the system exception noting immediate processing, and trigger standard human escalation summary layouts.",
+      "B": "Complete the manual status updates and close the context session, since the context has all necessary information to complete it automatically.",
+      "C": "Retry execution immediately with exponential back-off values, looping the conversation parameters until the refund is successfully processed.",
+      "D": "Escalate immediately to a human agent without standard tracking parameters or metadata."
+    },
+    "answer": "A",
+    "justification": "Explain what was verified, acknowledge the backend failure, and escalate to a human with the context already gathered."
+  },
+  {
+    "question": "A customer writes: \"I've been going back and forth on this return for days. I just want to speak to someone who can actually help me.\" The agent has confirmed via look_up_order that the return is straightforward—within policy and eligible for immediate processing. What should the agent do?",
+    "options": {
+      "A": "Execute the return immediately to solve the problem directly, and explain why it was processed automatically to bypass human escalation.",
+      "B": "Acknowledge the customer's frustration, inform them that the return is eligible, and offer to transfer them to a specialist if they still want to.",
+      "C": "Escalate to a human agent immediately to honor the customer's explicit request.",
+      "D": "Process the return first using the appropriate tool, and then transfer the interaction history to a human supervisor."
+    },
+    "answer": "C",
+    "justification": "The customer explicitly asked for a human. Honour that request rather than overriding it because the case looks simple."
+  },
+  {
+    "question": "Testing reveals that when a customer writes \"I need a refund for my recent purchase,\" the agent calls process_refund immediately but populates the required order_id parameter with a plausible-looking but fabricated value instead of first calling look_up_order to retrieve the actual order ID. The defined logic rules specify that the user intent cannot cleanly determine the ID. Which change directly addresses the root cause of the agent fabricating the order_id value?",
+    "options": {
+      "A": "Pre-parse customer messages to extract valid context identifiers and insert them into the conversation context before parsing to Claude.",
+      "B": "Update the system instructions to clearly state that order_id must be obtained from a previous tool call and must never be guessed or invented.",
+      "C": "Switch tool_choice from \"auto\" to \"any\" to force the agent to call a tool on every turn.",
+      "D": "Implement validation code that checks whether the order_id exists in your database before executing the refund, returning an error to the agent if not found."
+    },
+    "answer": "B",
+    "justification": "The root cause is that nothing tells the agent the ID must come from a prior tool call and must never be invented."
+  },
+  {
+    "question": "A customer sends: \"This is frustrating. I've explained my issue twice and nothing is being resolved. I want to talk to a real person NOW.\" The agent has not yet called any tools to investigate their account. What should the agent do?",
+    "options": {
+      "A": "First call get_customer and lookup_order to gather account context, then escalate to a human agent.",
+      "B": "Immediately call escalate_to_human with the conversation history.",
+      "C": "Briefly explain what the agent can help with and offer to resolve the issue quickly, escalating only if the customer repeats their request.",
+      "D": "Acknowledge the frustration and ask one targeted question to understand the specific issue before escalating."
+    },
+    "answer": "B",
+    "justification": "The customer has explicitly asked for a person and no investigation has begun, so escalate immediately with the conversation history."
+  },
+  {
+    "question": "Production logs show that the agent loops frequently loop endlessly requesting tool calls without completing the task after gathering data but before completing resolution or escalating. The team's goal is to guarantee that every customer interaction ends with either a completed resolution or a human hand-off. Which approach best achieves this guarantee?",
+    "options": {
+      "A": "Add a supervisor pipeline module that reads raw model content strings with a summary of findings whenever it determines it can complete resolutions within its internal workflows.",
+      "B": "Split the loop workflow into distinct management models—a first agent gathers context data via get_user_account and retrieve_order_details, then a second agent receives that data and handles process_refund or escalate_to_human, each with separate turn budgets.",
+      "C": "Implement logic loops that track conversation tokens and updates the prompt with detailed schematic criteria once the agent reaches 80% of standard context limits.",
+      "D": "Implement turn counter code that monitors the agent responses after selecting parameters—if the loop handles without a completed resolution or escalation, programmatically call escalate_to_human with the accumulated conversation context and tool results."
+    },
+    "answer": "D",
+    "justification": "A deterministic turn counter guarantees termination: when the budget is exhausted, code calls escalate_to_human with the accumulated context."
+  },
+  {
+    "question": "After investigating a billing issue over multiple turns, you've determined that duplicate charges occurred due to a payment gateway timeout triggering retry logic. The required refund ($847) exceeds your $500 authorization limit. You need to call escalate_to_human, and the human agent won't have access to your pipeline tool context. What metadata should you pass to enable effective resolution?",
+    "options": {
+      "A": "Only include necessary details: customer ID, real intent, and recommended actions.",
+      "B": "The platform's original serialized context plus the live result metadata showing duplicate transactions.",
+      "C": "Total details and transaction logs.",
+      "D": "The complete conversation transcript with all tool results."
+    },
+    "answer": "D",
+    "justification": "The human agent has no access to the tool context, so the complete transcript including all tool results is what enables resolution."
+  },
+  {
+    "question": "An agent is executing tracking checks, lookup calls, and determines that the dispute involves a promotional pricing error requiring manager approval—beyond the agent's authorization level. How should the workflow handle this mid-process escalation?",
+    "options": {
+      "A": "Complete the backend tracking with customer details, order info, and the condition history records before calling escalate_to_human.",
+      "B": "Halt processing immediately, deleting the contextual original messages.",
+      "C": "Intercept the model action, dynamically replacing the content rejects the transaction.",
+      "D": "Extract the complete conversation context response history to a database, then call escalate_to_human with a reference ID."
+    },
+    "answer": "A",
+    "justification": "Gather the customer, order and history data first, then escalate, so the human receives a complete picture."
+  },
+  {
+    "question": "Production logs show errors handling tool failures: the agent sometimes retries 5+ times uselessly (when the order ID doesn't exist), sometimes escalates immediately (premature for temporary network issues), and sometimes asks users for clarification (inappropriate when the user is locked out). Investigation shows your API tool outputs generic responses: {\"error\": \"system_failure\"}, {\"error\": \"tool_failed\"}, {\"error\": \"operation_failed\"}. The agent cannot distinguish between error types. What's the most effective improvement?",
+    "options": {
+      "A": "Rewrite tool responses inside the parsing script handling logic directly with customized descriptions and explicitly appropriate responses for each.",
+      "B": "Enhance the error string responses with precise structural metadata types ({\"type\": \"database_error\", \"code\": 504, \"is_retryable\": true, \"description\": \"...\"}), context, and a description of what caused the failure.",
+      "C": "Create an alternative pipeline tool for the agent that lets them bypass standard logic when checking structural variables for error categories and recommended actions.",
+      "D": "Implement validation logic loops with exact match blocks ({\"error\": \"...\"}) inside the turn loop layers, returning to the agent only after retries are exhausted."
+    },
+    "answer": "B",
+    "justification": "Structured error metadata with a type, code and is_retryable flag lets the agent distinguish transient failures from permanent ones."
+  },
+  {
+    "question": "After implementing your updated metadata payload, the backend tool throws an error (e.g., \"Order not found\" or a temporary database failure). What is the correct pattern for communicating these errors back to the agent?",
+    "options": {
+      "A": "Return the error message inside a standard text content block configuration, flagged to prompt manual retry guidelines.",
+      "B": "Return a custom text string structure with a \"failout\" marker defining the error type.",
+      "C": "Throw a standard code exception in the tool handler framework so that it can be tracked and logged externally.",
+      "D": "Return a standard tool_result block with the is_error parameter set to true, providing the error metadata inside the content."
+    },
+    "answer": "D",
+    "justification": "Tool failures are returned as a tool_result block with is_error set to true, with the error detail in the content."
+  },
+  {
+    "question": "Engineers frequently ask the agent to track detailed status changes within Jira tickets during reviews — checking ticket descriptions, acceptance criteria, and recent comments. This currently requires manually copy-pasting content into conversations. The team wants the agent to access this standard Jira data by itself. Which method offers the best approach?",
+    "options": {
+      "A": "Add structured tool schemas for the standard Jira REST APIs, handles client context authentication parameters, and passing JSON component blocks.",
+      "B": "Implement web scraping of standard web frames via UI wrappers and rendering through continuous tool interfaces.",
+      "C": "Write custom API wrappers swapping default API attributes designed specifically for this branch code tracker workflow.",
+      "D": "Extract Jira data items via direct file repository mappings that the agent accesses using generic Read tool."
+    },
+    "answer": "A",
+    "justification": "Structured tool schemas over the Jira REST API give the agent first-class, authenticated access to ticket data."
+  },
+  {
+    "question": "An engineer wants to inspect database behaviors, then requires the @claude manager tool to track how schema calls execute as queries across services. Which built-in tool is most appropriate for this task?",
+    "options": {
+      "A": "Monitor tool with built-in parameter options",
+      "B": "Bash tool with appropriate parameters",
+      "C": "Git or alternative pull requests tools",
+      "D": "Terminal tool or PowerShell command scripting context"
+    },
+    "answer": "B",
+    "justification": "Inspecting database behaviour and running queries is done with the built-in Bash tool."
+  },
+  {
+    "question": "Engineers are constructing automated review flows in a separate pipeline. ● Requirement 1: Focus on areas where errors are critical to the system context (e.g., security flaws, missing logical error messages, and ensure failures don't silently corrupt data). ● Requirement 2: Ensure reviews bypass existing linter rules processing workflows. For which support configuration approach template flow (e.g., standard workflow combined with review) will this most improve outcome quality?",
+    "options": {
+      "A": "Validating database queries or migrations",
+      "B": "Translating legacy scripts to new frameworks",
+      "C": "Refactoring messy legacy application files",
+      "D": "Formatting files text into markdown syntax tables"
+    },
+    "answer": null,
+    "justification": "The source material for this question is garbled: the options do not correspond to the scenario as transcribed. Verify against the original exam item before relying on it."
+  },
+  {
+    "question": "An LLM-based customer service agent frequently makes incorrect API tool calls because the tool's parameter names are ambiguous (e.g., it uses p_type instead of explicitly stating payment_type or product_type). You want to fix this permanently without retraining the underlying model. Which of the following architectural changes is the most robust way to solve this?",
+    "options": {
+      "A": "Update the system prompt with a 500-word paragraph detailing exactly what p_type means for every possible scenario.",
+      "B": "Wrap the tool in an adapter layer or a Model Context Protocol (MCP) server that exposes clear, descriptive property definitions (payment_type) and internally maps them to the legacy API parameters.",
+      "C": "Implement a validation retry loop that catches the API error when it fails, and asks the LLM to \"try guessing a different value\" for the parameter.",
+      "D": "Program the frontend application to automatically intercept all user inputs and guess which parameter the model will struggle with."
+    },
+    "answer": "B",
+    "justification": "An adapter layer or MCP server exposes clear, descriptive parameter names and maps them to the legacy API, fixing the ambiguity permanently."
+  },
+  {
+    "question": "An agent experiences an error executing an MCP tool. The backend throws common errors (e.g., \"User not found\" or temporary database failures). What is the correct pattern for communicating these errors back to the agent?",
+    "options": {
+      "A": "Return a response to the user with the status 'Request failed' to flag the run.",
+      "B": "Return a response with isError: true along with the error type.",
+      "C": "Throw an exception from the tool wrapper so the agent framework can catch and log it.",
+      "D": "Log standard error outputs and return an empty string to avoid confusing the model."
+    },
+    "answer": "B",
+    "justification": "MCP tool execution errors are returned as a structured result with isError true, so the model can read the failure and decide how to recover."
+  },
+  {
+    "question": "You are designing an AI agent that needs to fetch live data from an external API via an MCP (Model Context Protocol) server. The external API is strictly rate-limited. If the LLM generates a loop where it calls the same tool repeatedly in a short period, it will break the API quota. What is the most effective architectural guardrail to prevent this looping behavior at the infrastructure level?",
+    "options": {
+      "A": "Wrap the tool client in an orchestration layer that tracks a counter of consecutive tool calls and halts execution if a maximum threshold is exceeded.",
+      "B": "Update the system prompt to say: \"Please do not call the same tool more than three times in a row under any circumstance.\"",
+      "C": "Dynamically delete the tool's schema from the model's available tool definitions if it is called once, then re-inject it after a 5-minute cool-down.",
+      "D": "Let the API throw a 429 rate limit error, and train a secondary LLM to read the logs and apologize to the user after the crash occurs."
+    },
+    "answer": "A",
+    "justification": "A deterministic counter in the orchestration layer halts runaway loops regardless of what the model decides to do."
   }
 ];
