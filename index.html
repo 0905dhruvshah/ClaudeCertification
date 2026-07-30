@@ -117,29 +117,87 @@
             <div id="reviewList" class="review-list"></div>
         </section>
         <section id="dashboard" class="portal hidden">
-            <div class="dashboard-toolbar">
-                <div>
-                    <label for="candidateSelector">Candidate</label>
-                    <select id="candidateSelector">
-                        <option value=""> Select Candidate</option>
-                    </select>
-                </div>
-                <button id="resetCandidateHistory" class="button ghost">Reset History</button>
+          <header class="portal-header">
+            <button class="back-home-btn" data-portal="welcome">
+              <i class="fa-solid fa-house"></i>
+              <span>Back to Home</span>
+            </button>
+            <span class="eyebrow">CCA-F Dashboard</span>
+            <h1>Global Performance Dashboard</h1>
+            <p> Live results collected from all mock exam attempts. </p>
+          </header>
+          <div class="dashboard-toolbar">
+            <input id="candidateSearch" type="text" placeholder="Search candidate by name..." />
+            <button id="refreshDashboard" class="button secondary">
+              <i class="fa-solid fa-rotate-right"></i> Refresh </button>
+          </div>
+          <div class="stats-grid">
+            <article class="stat-card">
+              <span>Total Attempts</span>
+              <strong id="totalAttempts">0</strong>
+            </article>
+            <article class="stat-card">
+              <span>Passed</span>
+              <strong id="totalPassed">0</strong>
+            </article>
+            <article class="stat-card">
+              <span>Failed</span>
+              <strong id="totalFailed">0</strong>
+            </article>
+            <article class="stat-card">
+              <span>Average Score</span>
+              <strong id="averageScore">0</strong>
+            </article>
+            <article class="stat-card">
+              <span>Highest Score</span>
+              <strong id="highestScore">0</strong>
+            </article>
+            <article class="stat-card">
+              <span>Pass Rate</span>
+              <strong id="passRate">0%</strong>
+            </article>
+          </div>
+          <section class="card dashboard-card">
+            <div class="section-title">
+              <h2> 🏆 Top 10 Leaderboard </h2>
             </div>
-            <header class="portal-header">
-                <button class="back-home-btn" data-portal="welcome"><i class="fa-solid fa-house"></i><span>Back to Home</span></button><span class="eyebrow">Personal dashboard</span>
-                <h1>Your preparation status</h1>
-                <p>Scores are saved only in this browser.</p>
-            </header>
-            <div id="dashboardStats" class="dashboard-stats"></div>
-            <section class="card history-card">
-                <h2>Attempt history</h2>
-                <div id="attemptHistory"></div>
-            </section>
-            <section class="card history-card">
-                <h2>Leaderboard</h2>
-                <div id="leaderboardContainer"></div>
-            </section>
+            <table class="dashboard-table" id="leaderboardTable">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Name</th>
+                  <th>Score</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </section>
+          <section class="card dashboard-card">
+            <div class="section-title">
+              <h2> 📋 Recent Attempts </h2>
+            </div>
+            <table class="dashboard-table" id="recentAttemptsTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Score</th>
+                  <th>Correct</th>
+                  <th>Wrong</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </section>
+          <section class="card dashboard-card">
+            <div class="section-title">
+              <h2> 👤 Candidate History </h2>
+            </div>
+            <div id="candidateHistory"> Search a candidate above to view all attempts. </div>
+          </section>
         </section>
         <section id="practice" class="portal hidden">
             <header class="portal-header">
