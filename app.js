@@ -157,26 +157,24 @@ async function submitExam(expired) {
     const scaledScore = Math.round((correct / QUESTIONS.length) * 1000);
     const passingScore = 750;
     const passed = scaledScore >= passingScore;
-    try {
-        await fetch(API_URL,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                name:currentCandidate.name,
-                email:currentCandidate.email,
-                status:passed?"PASS":"FAIL",
-                score:scaledScore,
-                correct:correct,
-                wrong:QUESTIONS.length-correct,
-                percentage:percent,
-                attempt:1
+    try {        
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                name: currentCandidate.name,
+                email: currentCandidate.email || "",
+                status: passed ? "PASS" : "FAIL",
+                score: scaledScore,
+                correct: correct,
+                wrong: QUESTIONS.length - correct,
+                percentage: percent,
+                attempt: 1
             })
         });
+        console.log(await response.text());
     }
-    catch(error){
-        console.error(error);
+    catch(err){
+        console.error(err);
     }
     const storageKey = getCandidateStorageKey(currentCandidate.name);
     const attempts = JSON.parse(localStorage.getItem(storageKey) || "[]");
