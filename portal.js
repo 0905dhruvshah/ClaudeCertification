@@ -6,7 +6,7 @@ const portal = {
 const portalSections = ['welcome', 'exam', 'results', 'dashboard', 'practice', "resources"];
 async function getDashboardData() {
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(API_URL + "?t=" + Date.now(),{cache: "no-store"});
         if (!response.ok) {
             throw new Error("Unable to load dashboard data.");
         }
@@ -17,20 +17,24 @@ async function getDashboardData() {
         return [];
     }
 }
-function showPortal(name) {
-    portalSections.forEach(id => document.getElementById(id).classList.toggle("hidden", id !== name));
+async function showPortal(name) {
+    portalSections.forEach(id =>
+        document.getElementById(id).classList.toggle("hidden", id !== name)
+    );
     document.querySelectorAll(".nav-link").forEach(btn => {
         btn.classList.remove("active");
         if (btn.dataset.portal === name)
             btn.classList.add("active");
     });
-
     if (name === "practice") {
         renderPractice();
     }
+    if (name === "dashboard") {
+        await renderDashboard();
+    }
     window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+        top:0,
+        behavior:"smooth"
     });
 }
 
@@ -69,7 +73,7 @@ function buildLeaderboard(data) {
     leaderboard.forEach((item, index) => {
         const row = document.createElement("tr");
         const rankClass = index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "rank-other";
-        row.innerHTML = `        <td>            <div class="rank-badge ${rankClass}">                ${index + 1}            </div>        </td>        <td>${item.name}</td>        <td>${item.score}</td>        <td>            <span class="badge ${item.status === "PASS"                ? "badge-pass"                : "badge-fail"}">                ${item.status}            </span>        </td>        <td>${item.date}</td>        `;
+        row.innerHTML = `        <td>            <div class="rank-badge ${rankClass}">                ${index + 1}            </div>        </td>        <td>${item.name}</td>        <td>${item.score}</td>        <td>            <span class="badge ${item.status === "PASS"                ? "badge-pass"                : "badge-fail"}">                ${item.status}            </span>        </td>        <td>${item.timestamp}</td>        `;
         tbody.appendChild(row);
     });
 }
@@ -78,7 +82,7 @@ function buildRecentAttempts(data) {
     tbody.innerHTML = "";
     [...data].reverse().slice(0, 20).forEach(item => {
         const row = document.createElement("tr");
-        row.innerHTML = `            <td>${item.name}</td>            <td>${item.score}</td>            <td>${item.correct}</td>            <td>${item.wrong}</td>            <td>                <span class="badge ${item.status === "PASS"                    ? "badge-pass"                    : "badge-fail"}">                    ${item.status}                </span>            </td>            <td>${item.date}</td>            `;
+        row.innerHTML = `            <td>${item.name}</td>            <td>${item.score}</td>            <td>${item.correct}</td>            <td>${item.wrong}</td>            <td>                <span class="badge ${item.status === "PASS"                    ? "badge-pass"                    : "badge-fail"}">                    ${item.status}                </span>            </td>            <td>${item.timestamp}</td>            `;
         tbody.appendChild(row);
     });
 }
