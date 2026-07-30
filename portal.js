@@ -4,7 +4,19 @@ const portal = {
     practiceAnswers: {}
 };
 const portalSections = ['welcome', 'exam', 'results', 'dashboard', 'practice', "resources"];
-
+async function getDashboardData() {
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error("Unable to load dashboard data.");
+        }
+        return await response.json();
+    }
+    catch (error) {
+        console.error(error);
+        return [];
+    }
+}
 function showPortal(name) {
     portalSections.forEach(id => document.getElementById(id).classList.toggle("hidden", id !== name));
     document.querySelectorAll(".nav-link").forEach(btn => {
@@ -30,29 +42,58 @@ function attemptData(candidateName) {
 function allCandidates() {
     return JSON.parse(localStorage.getItem("ccaf-users") || "[]");
 }
-
-function renderDashboard() {
-    const selector = document.getElementById("candidateSelector");
-    const users = allCandidates();
-    selector.innerHTML = '<option value="">Select Candidate</option>';
-    users.forEach(user => {
-        selector.innerHTML += `<option value="${user.name}"> ${user.name} </option>`;
+async function renderDashboard() {
+    const data = await getDashboardData();
+    updateStatistics(data);
+    buildLeaderboard(data);
+    buildRecentAttempts(data);
+}
+function updateStatistics(data) {
+    const total = data.length;
+    const passed = data.filter(x => x.status === "PASS").length;
+    const failed = total - passed;
+    const highest = total ? Math.max(...data.map(x => Number(x.score))) : 0;
+    const average = total ? (data.reduce((a, b) => a + Number(b.score), 0) / total).toFixed(0) : 0;
+    const passRate = total ? ((passed / total) * 100).toFixed(1) : 0;
+    document.getElementById("totalAttempts").textContent = total;
+    document.getElementById("totalPassed").textContent = passed;
+    document.getElementById("totalFailed").textContent = failed;
+    document.getElementById("highestScore").textContent = highest;
+    document.getElementById("averageScore").textContent = average;
+    document.getElementById("passRate").textContent = passRate + "%";
+}
+function buildLeaderboard(data) {
+    const tbody = document.querySelector("#leaderboardTable tbody");
+    tbody.innerHTML = "";
+    const leaderboard = [...data].sort((a, b) => Number(b.score) - Number(a.score)).slice(0, 10);
+    leaderboard.forEach((item, index) => {
+        const row = document.createElement("tr");
+        const rankClass = index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "rank-other";
+        row.innerHTML = `        <td>            <div class="rank-badge ${rankClass}">                ${index + 1}            </div>        </td>        <td>${item.name}</td>        <td>${item.score}</td>        <td>            <span class="badge ${item.status === "PASS"                ? "badge-pass"                : "badge-fail"}">                ${item.status}            </span>        </td>        <td>${item.date}</td>        `;
+        tbody.appendChild(row);
     });
-    if (!selector.value && users.length) selector.value = users[0].name;
-    const attempts = attemptData(selector.value);
-    const stats = document.getElementById("dashboardStats");
-    const history = document.getElementById("attemptHistory");
-    if (!attempts.length) {
-        stats.innerHTML = ` <article class="card dashboard-empty"> <h2>No attempts found</h2> <p> This candidate hasn't taken any exams. </p> </article> `;
-        history.innerHTML = "";
+}
+function buildRecentAttempts(data) {
+    const tbody = document.querySelector("#recentAttemptsTable tbody");
+    tbody.innerHTML = "";
+    [...data].reverse().slice(0, 20).forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `            <td>${item.name}</td>            <td>${item.score}</td>            <td>${item.correct}</td>            <td>${item.wrong}</td>            <td>                <span class="badge ${item.status === "PASS"                    ? "badge-pass"                    : "badge-fail"}">                    ${item.status}                </span>            </td>            <td>${item.date}</td>            `;
+        tbody.appendChild(row);
+    });
+}
+document.getElementById("refreshDashboard").addEventListener("click", renderDashboard);
+document.getElementById("candidateSearch").addEventListener("input", async function() {
+    const keyword = this.value.toLowerCase();
+    const data = await getDashboardData();
+    const history = data.filter(x => x.name.toLowerCase().includes(keyword));
+    const container = document.getElementById("candidateHistory");
+    if (!history.length) {
+        container.innerHTML = "No candidate found.";
         return;
     }
-    const average = Math.round(attempts.reduce((sum, a) => sum + a.scaledScore, 0) / attempts.length);
-    const best = Math.max(...attempts.map(x => x.scaledScore));
-    const latest = attempts[0];
-    stats.innerHTML = ` <article class="stat-card card"> <span>Candidate</span> <strong>${selector.value}</strong> </article> <article class="stat-card card"> <span>Average</span> <strong>${average}</strong> </article> <article class="stat-card card"> <span>Best</span> <strong>${best}</strong> </article> <article class="stat-card card"> <span>Latest</span> <strong>${latest.scaledScore}</strong> </article> <article class="stat-card card"> <span>Attempts</span> <strong>${attempts.length}</strong> </article> `;
-    history.innerHTML = attempts.map(item => ` <div class="attempt-row"> <span> ${new Date(item.date).toLocaleDateString()} </span> <strong>${item.scaledScore}</strong> <small> ${item.correct}/${item.total} Correct </small> </div> `).join("");
-}
+    container.innerHTML = history.map(x => `        <p>            <strong>${x.score}</strong>            (${x.status})            - ${x.date}        </p>    `).join("");
+});
 function renderPracticeNavigator() {
     const nav = document.getElementById("practiceQuestionNav");
     nav.innerHTML = "";
@@ -87,7 +128,7 @@ function renderPractice() {
 document.querySelectorAll('[data-portal]').forEach(button => button.addEventListener('click', () => showPortal(button.dataset.portal)));
 document.getElementById('practicePrevious').addEventListener('click', () => {
     portal.practiceIndex--;
-    renderPractice();
+    renderPractice();``
 });
 document.getElementById('practiceNext').addEventListener('click', () => {
     portal.practiceIndex++;
